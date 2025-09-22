@@ -1,0 +1,27 @@
+{
+	"name": "nutritrack",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"No tests yet\" && exit 0",
+		"prepare": "husky"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/wassimyazza/NutriTrack-.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "module",
+	"bugs": {
+		"url": "https://github.com/wassimyazza/NutriTrack-/issues"
+	},
+	"homepage": "https://github.com/wassimyazza/NutriTrack-#readme",
+	"devDependencies": {
+		"@commitlint/cli": "^19.8.1",
+		"@commitlint/config-conventional": "^19.8.1",
+		"husky": "^9.1.7"
+	}
+}
