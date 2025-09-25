@@ -6,7 +6,9 @@
    "scripts": {
       "test": "echo \"No tests yet\" && exit 0",
       "prepare": "husky",
-      "start": "nodemon server.js"
+      "start": "nodemon server.js",
+      "tailwind": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/output.css --watch",
+      "dev": "npm-run-all --parallel start tailwind"
    },
    "repository": {
       "type": "git",
@@ -24,6 +26,7 @@
       "@commitlint/cli": "^19.8.1",
       "@commitlint/config-conventional": "^19.8.1",
       "husky": "^9.1.7",
+      "npm-run-all": "^4.1.5",
       "prettier": "3.6.2",
       "prettier-plugin-ejs": "^1.0.3"
    },
@@ -31,11 +34,13 @@
       "**/*": "prettier --write --ignore-unknown"
    },
    "dependencies": {
+      "@tailwindcss/cli": "^4.1.13",
       "body-parser": "^2.2.0",
       "dotenv": "^17.2.2",
       "ejs": "^3.1.10",
       "express": "^5.1.0",
       "mysql2": "^3.15.0",
-      "nodemon": "^3.1.10"
+      "nodemon": "^3.1.10",
+      "tailwindcss": "^4.1.13"
    }
 }
