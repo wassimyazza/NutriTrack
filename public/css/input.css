@@ -1,1 +1,5 @@
 @import 'tailwindcss';
+
+html {
+   @apply text-xs md:text-sm lg:text-base;
+}
