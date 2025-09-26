@@ -4,13 +4,16 @@ import router from './routes/web.js';
 import path from 'path';
 import {fileURLToPath} from 'url';
 import bodyParser from 'body-parser';
+import expressLayouts from 'express-ejs-layouts';
 
 const app = express();
 dotenv.config({path: '.env'});
 // set ejs as the template engine
 app.set('view engine', 'ejs');
+app.use(expressLayouts);
+app.set('layout', './layouts/main');
 
-// make ejs now where is the /views folder
+// make ejs know where is the /views folder
 // recreate __filename and __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
