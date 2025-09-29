@@ -3,33 +3,45 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 class Database {
-    #connection;
+   #connection;
 
-    constructor(config) {
-        this.config = config;
-        this.#connection = null;
-    }
+   constructor(config) {
+      this.config = config;
+      this.#connection = null;
+   }
 
-    connect(callback) {
-        this.#connection = mysql.createConnection(this.config);
-        this.#connection.connect(err => {
-            if (err) throw err;
-            console.log('Database connected!');
-            if (callback) callback();
-        });
-    }
+   // méthode pour se connecter
+   async connect() {
+      try {
+         this.#connection = await mysql.createConnection(this.config);
+         console.log('Connecté à la base de données !');
+         return this.#connection;
+      } catch (err) {
+         console.error(
+            'Erreur de connexion à la base de données :',
+            err.message
+         );
+         process.exit(1);
+      }
+   }
 
-    getConnection() {
-        if (!this.#connection) throw new Error('Connection not initialized');
-        return this.#connection;
-    }
+   // getter pour récupérer la connexion
+   getConnection() {
+      if (!this.#connection) {
+         throw new Error(
+            'La connexion à la base de données n’est pas initialisée.'
+         );
+      }
+      return this.#connection;
+   }
 }
 
 const dbConfig = {
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'NutriTrack'
+   host: process.env.DB_HOST || 'localhost',
+   user: process.env.DB_USER || 'root',
+   password: process.env.DB_PASSWORD || '',
+   database: process.env.DB_NAME,
+   multipleStatements: true,
 };
 
 const database = new Database(dbConfig);
