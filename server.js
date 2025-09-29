@@ -22,6 +22,10 @@ app.set('views', path.join(__dirname, 'views'));
 
 // middlewares
 app.use(bodyParser.json());
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // for serving static files
 app.use(express.static('public'));
 
