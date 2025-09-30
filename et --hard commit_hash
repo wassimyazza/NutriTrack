@@ -1,0 +1,217 @@
+[33mcommit 231e424f2726376ab315b50f0a37c6882c8bf144[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mwassimyazza/feature/login-page-and-function[m[33m, [m[1;31morigin/wassimyazza/feature/login-page-and-function[m[33m)[m
+Author: wassim <wassimwassim.ka1@gmail.com>
+Date:   Tue Sep 30 14:29:48 2025 +0100
+
+    fix: update tables in class init to much our project
+
+[33mcommit 2d3b02f9b788971e2e2d2c15be9058d55b6774d7[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Tue Sep 30 12:02:08 2025 +0100
+
+    style(layouts): remove the padding from the main layout so its children can have its custom padding
+
+[33mcommit c5feb2adda2e72cec823057f0db4784306b00c05[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Tue Sep 30 11:48:51 2025 +0100
+
+    chore: remove unsusful folders/files
+
+[33mcommit f8e2a2addb9fb7abe767cf4453cbce85bf75024f[m[33m ([m[1;32mdev[m[33m)[m
+Author: wassim <wassimwassim.ka1@gmail.com>
+Date:   Tue Sep 30 11:23:01 2025 +0100
+
+    feat: install session package and use it for login authentification
+
+[33mcommit 9d63222179547a690579b9555b6731da33092643[m
+Author: wassim <wassimwassim.ka1@gmail.com>
+Date:   Tue Sep 30 11:18:49 2025 +0100
+
+    feat: install session package and use it for login authentification
+
+[33mcommit 6a256392765658579d7260c20754aff0d6e3d2c2[m[33m ([m[1;31morigin/feature/db_initialisation[m[33m)[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Mon Sep 29 15:01:46 2025 +0100
+
+    feat(db): implement and call init() to create the database if it does not exist
+
+[33mcommit eb637e08ea65e1d737f90afc1be4a43f9c8afbf3[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Mon Sep 29 14:58:27 2025 +0100
+
+    chore(db): enable multipleStatements in MySQL connection config
+
+[33mcommit 945cc7c4d99ca7fcd24992c480157f8b539da4c8[m
+Author: wassim <wassimwassim.ka1@gmail.com>
+Date:   Mon Sep 29 12:12:52 2025 +0100
+
+    fix(tailwind): remove script tailwind because we don't need it
+
+[33mcommit 3216324c693eec8dba2ba919ecad311e4cf5c2c7[m
+Merge: 6a410c1 ff5b130
+Author: wassimyazza <wassimwassim.ka1@gmail.com>
+Date:   Mon Sep 29 12:06:26 2025 +0100
+
+    Merge pull request #3 from wassimyazza/wassimyazza/feature/login-page-and-function
+    
+    Merge branch 'wassimyazza/feature/login-page-and-function' into dev
+
+[33mcommit ff5b13078f77bc02f67fb52d35c5eff53ffb7d9a[m
+Merge: 7dfbaf5 6a410c1
+Author: wassimyazza <wassimwassim.ka1@gmail.com>
+Date:   Mon Sep 29 12:06:14 2025 +0100
+
+    Merge branch 'dev' into wassimyazza/feature/login-page-and-function
+
+[33mcommit 7dfbaf5e61c734c3cc7c9f9c1442125affdf9737[m
+Author: wassim <wassimwassim.ka1@gmail.com>
+Date:   Mon Sep 29 11:58:13 2025 +0100
+
+    feat(login): create findbyemail function
+
+[33mcommit 86bfda579bc41d949043201390fb36130e7ca5e7[m
+Author: wassim <wassimwassim.ka1@gmail.com>
+Date:   Sun Sep 28 23:12:16 2025 +0100
+
+    feat(login): add login page
+
+[33mcommit 45192632dddb8d5c3af630e144001d7e72986d09[m
+Author: wassim <wassimwassim.ka1@gmail.com>
+Date:   Sun Sep 28 22:44:59 2025 +0100
+
+    feat(login): create login page and function
+
+[33mcommit 77bbd3f4fad02e5d039eb66a2af220e8b43769c7[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/feature/recommandation-ui[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:27:45 2025 +0100
+
+    feat: initilize the recommendations page
+
+[33mcommit 6a4e42aeab0bbf33971995eeb7ce14ec016782e9[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:26:33 2025 +0100
+
+    feat(layouts): create the main layout
+
+[33mcommit 75300c5f2fee562c9e1b00f14d8af20bb4174eee[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:25:16 2025 +0100
+
+    feat(partials): create the main footer
+
+[33mcommit 26d8effe4cc537623a9742d1c1c1ad8b8ed5ae0a[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:24:27 2025 +0100
+
+    feat(partials): create the main nav bar
+
+[33mcommit 8cd16c41c3b8ad304a82eea6fb6570f5a1bf6754[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:23:54 2025 +0100
+
+    feat(server): configure express-ejs-layouts
+
+[33mcommit eb9716cd9663b170b393e8efb23505d912b8f923[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:23:04 2025 +0100
+
+    style: apply media queries on html fontsize
+
+[33mcommit aad1caf49eed12854809b2c292ab21c94efb3da4[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:21:53 2025 +0100
+
+    chore(deps): add express-ejs-layouts package
+
+[33mcommit 544ca47d397582a6f20c5ba1a8933c32d3bceceb[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:21:07 2025 +0100
+
+    feat(routes): add GET recommendations route
+
+[33mcommit 20fb0619eb770dd039da4071413bb54d72af9b0f[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:20:11 2025 +0100
+
+    chore(images): add logo and card_placeholder
+
+[33mcommit 7eb5daf8f5dd7ac22efc19e7be1f25e1dedbdd50[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:18:57 2025 +0100
+
+    feat(controllers): create reacommendation controller
+
+[33mcommit 5a747a11b2042253f30f2e4da9cad73904a39d6e[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:18:04 2025 +0100
+
+    feat(models): create reacommendation model
+
+[33mcommit 6a410c177fa6f58d9e1f1065ed984a7f6ef4575e[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:27:45 2025 +0100
+
+    feat: initilize the recommendations page
+
+[33mcommit 8adbb8ac1d47d1f7828d5b18bab01374b583e5e0[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:26:33 2025 +0100
+
+    feat(layouts): create the main layout
+
+[33mcommit f10e148f5df77c0482a6946ff4182eb30d82e60e[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:25:16 2025 +0100
+
+    feat(partials): create the main footer
+
+[33mcommit 9597dd45d9dd4bdd58fec989afe7e742484ac25f[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:24:27 2025 +0100
+
+    feat(partials): create the main nav bar
+
+[33mcommit cbc8e792eff935bba68d58c6463938135ca12a65[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:23:54 2025 +0100
+
+    feat(server): configure express-ejs-layouts
+
+[33mcommit 52ed11980f7716bc8206c8c8b3344a92ff32ac2f[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:23:04 2025 +0100
+
+    style: apply media queries on html fontsize
+
+[33mcommit a69bbac7a445eef166d5ee475d2157772a6ab978[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:21:53 2025 +0100
+
+    chore(deps): add express-ejs-layouts package
+
+[33mcommit 20ca8d0575e03d2cf395bebd72b8a3c4768cc795[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:21:07 2025 +0100
+
+    feat(routes): add GET recommendations route
+
+[33mcommit c85a26dd9a30ff5f8e640f7e74464f63e2f96c9a[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:20:11 2025 +0100
+
+    chore(images): add logo and card_placeholder
+
+[33mcommit 69e2863ec9af4e938adf37e210ed1ed657321e1e[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:18:57 2025 +0100
+
+    feat(controllers): create reacommendation controller
+
+[33mcommit ba7a90e09b05bb49b49bb82fc3ac0b35c1d35a9e[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Fri Sep 26 17:18:04 2025 +0100
+
+    feat(models): create reacommendation model
+
+[33mcommit ef417d192526260314e0c6d5a125b9a2a57315e3[m
+Author: ayoub akraou <87671584+ayoub-akraou@users.noreply.github.com>
+Date:   Thu Sep 25 11:44:
