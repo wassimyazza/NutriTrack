@@ -17,6 +17,8 @@ router.post('/logout', AuthController.logout);
 // user routers
 
 router.get('/dashboard', isAuthenticated, DashboardController.dashboard);
+router.get('/register', AuthController.register);
+router.post('/register', AuthController.registerPost);
 // profile routes
 router.get('/profile', isAuthenticated, ProfileController.show);
 router.patch('/profile', isAuthenticated, ProfileController.update);
