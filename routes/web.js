@@ -31,8 +31,8 @@ router.get('/dashboard', isAuthenticated, DashboardController.dashboard);
 router.get('/register', AuthController.register);
 router.post('/register', AuthController.registerPost);
 // profile routes
-router.get('/profile', ProfileController.show);
-router.patch('/profile', ProfileController.update);
+router.get('/profile', isAuthenticated, ProfileController.show);
+router.patch('/profile', isAuthenticated, ProfileController.update);
 
 router.get('/books', BookController.index);
 router.get('/books/:id', BookController.show);
