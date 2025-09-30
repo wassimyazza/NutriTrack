@@ -7,6 +7,7 @@ import DashboardController from '../app/controllers/DashboardController.js';
 import {isAuthenticated} from '../app/middlewares/authMiddleware.js';
 import MealController from '../app/controllers/MealController.js';
 import upload from '../config/multer.js';
+import ProfileController from '../app/controllers/ProfileController.js';
 
 const router = express.Router();
 
@@ -29,6 +30,8 @@ router.post(
 router.get('/dashboard', isAuthenticated, DashboardController.dashboard);
 router.get('/register', AuthController.register);
 router.post('/register', AuthController.registerPost);
+// profile routes
+router.get('/profile', ProfileController.show);
 
 router.get('/books', BookController.index);
 router.get('/books/:id', BookController.show);
