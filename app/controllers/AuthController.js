@@ -28,4 +28,13 @@ export default class AuthController {
          res.status(500).send('An error occurred during login');
       }
    }
+
+   static logout(req, res) {
+      req.session.destroy(err => {
+         if (err) {
+            return res.status(500).send('Could not log out');
+         }
+         res.redirect('/login');
+      });
+   }
 }
