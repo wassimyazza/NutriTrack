@@ -63,7 +63,7 @@ CREATE TABLE recommendations (
     FOREIGN KEY (meal_id) REFERENCES meals(id) ON DELETE CASCADE
 );
 
-INSERT INTO recommendations (user_id, meal_id, recommendation_text)
+INSERT INTO recommendations (meal_id, recommendation_text)
 VALUES
 (1, 'Add more vegetables'),
 (1, 'Reduce salt intake'),
