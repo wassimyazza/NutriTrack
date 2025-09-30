@@ -12,7 +12,7 @@ router.get('/login', AuthController.login);
 router.post('/login', AuthController.loginPost);
 // profile routes
 router.get('/profile', ProfileController.show);
-router.update('/profile', ProfileController.update);
+router.patch('/profile', ProfileController.update);
 
 router.get('/books', BookController.index);
 router.get('/books/:id', BookController.show);
