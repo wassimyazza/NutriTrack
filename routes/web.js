@@ -3,12 +3,15 @@ import express from 'express';
 import BookController from '../app/controllers/BookController.js';
 import RecommendationController from '../app/controllers/RecommendationController.js';
 import AuthController from '../app/controllers/AuthController.js';
+import ProfileController from '../app/controllers/ProfileController.js';
 
 const router = express.Router();
 
 // auth routers
 router.get('/login', AuthController.login);
 router.post('/login', AuthController.loginPost);
+// profile routes
+router.get('/profile', ProfileController.show);
 
 router.get('/books', BookController.index);
 router.get('/books/:id', BookController.show);
