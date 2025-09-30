@@ -41,15 +41,15 @@ class Database {
          const [result] = await this.getConnection().query(
             'SHOW DATABASES LIKE "NutriTrack";'
          );
-         
+
          if (!result.length) {
             console.log('Creating database and tables...');
             await this.getConnection().query(`
                CREATE DATABASE IF NOT EXISTS NutriTrack;
             `);
-            
+
             await this.getConnection().query('USE NutriTrack;');
-            
+
             await this.getConnection().query(`
                CREATE TABLE users (
                   id INT AUTO_INCREMENT PRIMARY KEY,
