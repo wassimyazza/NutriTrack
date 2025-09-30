@@ -721,10 +721,13 @@
          );
 
          inputs.forEach(input => {
-            if (input.type === 'radio' || input.type === 'checkbox') {
+            if (input.type === 'radio') {
                if (input.checked) {
                   this.formData[input.name] = input.value;
                }
+            } else if (input.type === 'checkbox') {
+               // Pour les checkbox, stocker true/false
+               this.formData[input.name] = input.checked;
             } else {
                this.formData[input.name] = input.value;
             }
@@ -801,18 +804,17 @@
             submitBtn.disabled = true;
 
             try {
-               // Préparer les données à envoyer
-               const formData = new FormData();
-               Object.keys(this.formData).forEach(key => {
-                  formData.append(key, this.formData[key]);
-               });
+               // Debug: afficher les données avant envoi
+               console.log('Données à envoyer:', this.formData);
 
                // Envoyer les données au serveur
-               fetch('/register', {
+               const response = await fetch('/register', {
                   method: 'POST',
                   headers: {'Content-Type': 'application/json'},
                   body: JSON.stringify(this.formData),
                });
+
+               console.log('Response status:', response.status);
 
                const result = await response.json();
 
@@ -856,21 +858,18 @@
       }
 
       showErrorMessage(message) {
-         // Créer un message d'erreur
          const errorDiv = document.createElement('div');
          errorDiv.className =
             'fixed top-4 right-4 bg-red-500 text-white p-4 rounded-lg shadow-lg z-50';
          errorDiv.textContent = message;
          document.body.appendChild(errorDiv);
 
-         // Supprimer après 5 secondes
          setTimeout(() => {
             document.body.removeChild(errorDiv);
          }, 5000);
       }
 
       showServerErrors(errors) {
-         // Afficher les erreurs serveur dans les champs appropriés
          errors.forEach(error => {
             // Essayer de mapper l'erreur au bon champ
             if (error.includes('nom complet')) {

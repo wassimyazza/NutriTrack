@@ -6,25 +6,30 @@ export default class AuthController {
       res.render('auth/login');
    }
 
-   static loginPost(req, res) {
-      const {email, password} = req.body;
+   static async loginPost(req, res) {
+      try {
+         const {email, password} = req.body;
 
-      User.findByEmail(email, (err, user) => {
-         if (err) return res.send('Database error');
+         // Trouver l'utilisateur par email
+         const user = await User.findByEmail(email);
          if (!user) return res.send('Email or password incorrect');
 
-         bcrypt.compare(password, user.password, (err, match) => {
-            if (err) return res.send('Error checking password');
-            if (!match) return res.send('Email or password incorrect');
+         // Vérifier le mot de passe
+         const match = await bcrypt.compare(password, user.password);
+         if (!match) return res.send('Email or password incorrect');
 
-            req.session.user = {
-               id: user.id,
-               name: user.name,
-               email: user.email,
-            };
-            res.redirect('/dashboard');
-         });
-      });
+         // Créer la session
+         req.session.user = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+         };
+
+         res.redirect('/dashboard');
+      } catch (err) {
+         console.error('Erreur login:', err);
+         return res.send('Database error');
+      }
    }
 
    static register(req, res) {
@@ -32,8 +37,10 @@ export default class AuthController {
    }
 
    static async registerPost(req, res) {
+      console.log('=== REQUÊTE REÇUE ===');
       console.log('Content-Type:', req.headers['content-type']);
       console.log('Body:', req.body);
+      console.log('Body keys:', Object.keys(req.body));
 
       try {
          const {
@@ -50,14 +57,12 @@ export default class AuthController {
             terms,
          } = req.body;
 
-         // Initialisation du tableau d'erreurs
          const errors = [];
 
-         // --- VALIDATIONS ---
          if (!fullname || fullname.trim().length < 2) {
             errors.push('Le nom complet doit contenir au moins 2 caractères');
          }
-         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+         if (!email) {
             errors.push('Veuillez entrer un email valide');
          }
          if (!age || age < 16 || age > 120) {
@@ -92,73 +97,64 @@ export default class AuthController {
             );
          }
 
-         if (!terms) {
+         if (!terms || terms === 'false') {
             errors.push("Vous devez accepter les conditions d'utilisation");
          }
 
          if (errors.length > 0) {
+            console.log('Erreurs de validation:', errors);
             return res.status(400).json({success: false, errors});
          }
 
-         // Vérifier si l'email est déjà utilisé
-         User.findByEmail(email, async (err, existingUser) => {
-            if (err) {
-               console.error('Erreur vérification email:', err);
-               return res
-                  .status(500)
-                  .json({success: false, message: 'Erreur de base de données'});
-            }
+         // Vérifier si l'email existe déjà (AVEC AWAIT!)
+         const existingUser = await User.findByEmail(email);
+         console.log('Utilisateur existant?', existingUser ? 'Oui' : 'Non');
 
-            if (existingUser) {
-               return res.status(400).json({
-                  success: false,
-                  errors: ['Cet email est déjà utilisé'],
-               });
-            }
-
-            // Hachage du mot de passe
-            const hashedPassword = await bcrypt.hash(password, 12);
-
-            // Préparation des données pour la DB
-            const finalUserData = {
-               name: fullname.trim(),
-               email: email.toLowerCase().trim(),
-               password: hashedPassword,
-               age: parseInt(age),
-               gender,
-               height: parseFloat(height),
-               weight: parseFloat(weight),
-               activity_level,
-               goal,
-               condition_user,
-            };
-
-            // Création de l'utilisateur
-            User.create(finalUserData, (err, result) => {
-               if (err) {
-                  console.error('Erreur création utilisateur:', err);
-                  return res.status(500).json({
-                     success: false,
-                     message: 'Erreur lors de la création du compte',
-                  });
-               }
-
-               // Sauvegarde dans la session
-               req.session.user = {
-                  id: result.insertId,
-                  name: finalUserData.name,
-                  email: finalUserData.email,
-               };
-
-               return res.json({
-                  success: true,
-                  message: 'Compte créé avec succès !',
-                  redirect: '/dashboard',
-               });
+         if (existingUser) {
+            return res.status(400).json({
+               success: false,
+               errors: ['Cet email est déjà utilisé'],
             });
+         }
+
+         // Hasher le mot de passe
+         const hashedPassword = await bcrypt.hash(password, 12);
+         console.log('Mot de passe hashé');
+
+         // Préparation des données pour la DB
+         const finalUserData = {
+            name: fullname.trim(),
+            email: email.toLowerCase().trim(),
+            password: hashedPassword,
+            age: parseInt(age),
+            gender,
+            height: parseFloat(height),
+            weight: parseFloat(weight),
+            activity_level,
+            goal,
+            condition_user,
+         };
+
+         console.log("Création de l'utilisateur...");
+         // Créer l'utilisateur (AVEC AWAIT!)
+         const newUser = await User.create(finalUserData);
+         console.log('Utilisateur créé avec ID:', newUser.id);
+
+         // Créer la session
+         req.session.user = {
+            id: newUser.id,
+            name: finalUserData.name,
+            email: finalUserData.email,
+         };
+
+         console.log('✅ Inscription réussie!');
+         return res.json({
+            success: true,
+            message: 'Compte créé avec succès !',
+            redirect: '/dashboard',
          });
       } catch (error) {
-         console.error('Erreur registerPost:', error);
+         console.error('❌ Erreur registerPost:', error);
          return res
             .status(500)
             .json({success: false, message: 'Erreur interne du serveur'});
