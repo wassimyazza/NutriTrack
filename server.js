@@ -1,3 +1,4 @@
+// server.js
 import express from 'express';
 import dotenv from 'dotenv';
 import router from './routes/web.js';
@@ -5,9 +6,22 @@ import path from 'path';
 import {fileURLToPath} from 'url';
 import bodyParser from 'body-parser';
 import expressLayouts from 'express-ejs-layouts';
+import session from 'express-session';
 
 const app = express();
 dotenv.config({path: '.env'});
+
+// Session middleware
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'your-secret-key-change-this',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { 
+        secure: false,
+        maxAge: 24 * 60 * 60 * 1000
+    }
+}));
+
 // set ejs as the template engine
 app.set('view engine', 'ejs');
 app.use(expressLayouts);

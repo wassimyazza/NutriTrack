@@ -1,24 +1,31 @@
 import User from '../models/User.js';
+import bcrypt from 'bcrypt';
 
 export default class AuthController {
     static login(req, res) {
         res.render('auth/login');
     }
 
-    static loginPost(req, res) {
-        const { email, password } = req.body;
-
-        User.findByEmail(email, (err, user) => {
-            if (err) return res.send('Database error');
-            if (!user) return res.send('Email or password incorrect');
-
-            bcrypt.compare(password, user.password, (err, match) => {
-                if (err) return res.send('Error checking password');
-                if (!match) return res.send('Email or password incorrect');
-
-                req.session.user = { id: user.id, name: user.name, email: user.email };
-                res.redirect('/dashboard');
-            });
-        });
+    static async loginPost(req, res) {
+        try {
+            const { email, password } = req.body;
+            const user = await User.findByEmail(email);
+            if (!user) {
+                return res.status(401).send('Email or password incorrect');
+            }
+            const match = await bcrypt.compare(password, user.password);
+            if (!match) {
+                return res.status(401).send('Email or password incorrect');
+            }
+            req.session.user = { 
+                id: user.id, 
+                name: user.name, 
+                email: user.email 
+            };
+            res.redirect('/dashboard');
+        } catch (err) {
+            console.error('Login error:', err);
+            res.status(500).send('An error occurred during login');
+        }
     }
 }
