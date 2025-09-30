@@ -7,6 +7,7 @@ import {fileURLToPath} from 'url';
 import bodyParser from 'body-parser';
 import expressLayouts from 'express-ejs-layouts';
 import session from 'express-session';
+import methodOverride from 'method-override';
 
 const app = express();
 dotenv.config({path: '.env'});
@@ -41,6 +42,7 @@ app.use(bodyParser.json());
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(methodOverride('_method'));
 
 // for serving static files
 app.use(express.static('public'));
