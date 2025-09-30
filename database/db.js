@@ -71,12 +71,11 @@ class Database {
             await this.getConnection().query(`
                CREATE TABLE meals (
                   id INT AUTO_INCREMENT PRIMARY KEY,
-                  name VARCHAR(100) NOT NULL,
-                  calories DECIMAL(6,2),
-                  proteins DECIMAL(6,2),
-                  carbs DECIMAL(6,2),
-                  fats DECIMAL(6,2),
-                  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                  user_id INT NOT NULL,
+                  image_path VARCHAR(255),
+                  analyzed TINYINT(1) DEFAULT 0,
+                  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                  FOREIGN KEY (user_id) REFERENCES users(id)
                );
             `);
 
@@ -96,9 +95,13 @@ class Database {
                CREATE TABLE recommendations (
                   id INT AUTO_INCREMENT PRIMARY KEY,
                   meal_id INT NOT NULL,
-                  recommendation_text VARCHAR(255) NOT NULL,
+                  calories DECIMAL(6,2),
+                  proteins DECIMAL(6,2),
+                  carbs DECIMAL(6,2),
+                  fats DECIMAL(6,2),
+                  notes TEXT,
                   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                  FOREIGN KEY (meal_id) REFERENCES meals(id) ON DELETE CASCADE
+                  FOREIGN KEY (meal_id) REFERENCES meals(id)
                );
             `);
 
@@ -113,11 +116,11 @@ class Database {
             `);
 
             await this.getConnection().query(`
-               INSERT INTO meals (name, calories, proteins, carbs, fats) VALUES
-               ('Oatmeal with Milk', 350, 12, 55, 8),
-               ('Grilled Chicken Salad', 400, 35, 20, 15),
-               ('Banana Smoothie', 200, 5, 40, 2),
-               ('Protein Shake', 250, 25, 10, 5);
+               INSERT INTO meals (user_id, image_path, analyzed, created_at) VALUES
+               (1, '/uploads/meals/oatmeal_milk_20250929.jpg', 1, '2025-09-29 08:00:00'),
+               (1, '/uploads/meals/grilled_chicken_salad_20250929.jpg', 1, '2025-09-29 12:30:00'),
+               (2, '/uploads/meals/banana_smoothie_20250929.jpg', 1, '2025-09-29 10:00:00'),
+               (3, '/uploads/meals/protein_shake_20250929.jpg', 1, '2025-09-29 07:30:00');
             `);
 
             await this.getConnection().query(`
@@ -129,12 +132,11 @@ class Database {
             `);
 
             await this.getConnection().query(`
-               INSERT INTO recommendations (meal_id, recommendation_text)
-               VALUES
-               (1, 'Add more vegetables'),
-               (1, 'Reduce salt intake'),
-               (2, 'Add more protein'),
-               (2, 'Watch sugar levels');
+               INSERT INTO recommendations (meal_id, calories, proteins, carbs, fats, notes, created_at) VALUES
+               (1, 350, 12, 55, 8, 'Add more vegetables; reduce salt intake', '2025-09-29 08:05:00'),
+               (2, 400, 35, 20, 15, 'Add more protein; watch sugar levels', '2025-09-29 12:35:00'),
+               (3, 200, 5, 40, 2, 'Good for a quick energy boost', '2025-09-29 10:05:00'),
+               (4, 250, 25, 10, 5, 'Post-workout shake; add simple carbs if needed', '2025-09-29 07:35:00');
             `);
 
             console.log('Database initialized successfully!');
