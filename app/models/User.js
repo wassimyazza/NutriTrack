@@ -1,6 +1,9 @@
 import database from '../../database/db.js';
+import Model from './Model.js';
 
-class User {
+class User extends Model {
+   static table = 'users';
+
    static async findByEmail(email) {
       try {
          const connection = database.getConnection();

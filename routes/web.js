@@ -16,6 +16,8 @@ router.post('/logout', AuthController.logout);
 // user routers
 
 router.get('/dashboard', isAuthenticated, DashboardController.dashboard);
+router.get('/register', AuthController.register);
+router.post('/register', AuthController.registerPost);
 
 router.get('/books', BookController.index);
 router.get('/books/:id', BookController.show);
