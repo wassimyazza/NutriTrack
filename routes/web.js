@@ -8,7 +8,9 @@ const router = express.Router();
 
 // auth routers
 router.get('/login', AuthController.login);
-router.post('/login',AuthController.loginPost);
+router.post('/login', AuthController.loginPost);
+router.get('/register', AuthController.register);
+router.post('/register', AuthController.registerPost);
 
 router.get('/books', BookController.index);
 router.get('/books/:id', BookController.show);

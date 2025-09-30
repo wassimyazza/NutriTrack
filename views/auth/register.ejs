@@ -1,40 +1,906 @@
-<%- include('partials/header') %> <!-- si ton layout inclut un header -->
-
 <div class="flex h-screen">
-  <!-- Partie gauche -->
-  <div class="flex flex-col justify-center items-center bg-gray-800 text-white w-1/2 rounded-r-[50%] p-10">
-    <div class="flex items-center text-3xl font-bold mb-4">
-      <span class="text-orange-500">Nutri</span>
-      <img src="/images/food.png" alt="logo" class="w-12 mx-2">
-      <span class="text-cyan-400">Track</span>
-    </div>
-    <p class="text-center text-lg">
-      Créez votre compte dès maintenant et gérez votre alimentation
-    </p>
-  </div>
-
-  <!-- Partie droite -->
-  <div class="flex justify-center items-center w-1/2">
-    <form action="/register" method="POST" 
-          class="bg-white p-8 rounded-2xl shadow-xl border-2 
-                 border-transparent bg-clip-padding bg-gradient-to-r 
-                 from-orange-400 to-cyan-400">
-      <div class="bg-white p-6 rounded-xl">
-        <label for="fullname" class="block mb-2 font-medium">Nom complet</label>
-        <input type="text" id="fullname" name="fullname" placeholder="nom complet"
-               class="w-full p-3 mb-4 border rounded-lg focus:ring-2 focus:ring-orange-400 outline-none" required>
-
-        <label for="email" class="block mb-2 font-medium">Email</label>
-        <input type="email" id="email" name="email" placeholder="email"
-               class="w-full p-3 mb-4 border rounded-lg focus:ring-2 focus:ring-orange-400 outline-none" required>
-
-        <button type="submit" 
-                class="w-full py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition">
-          Suivante
-        </button>
+   <!-- Partie gauche -->
+   <div
+      class="flex flex-col justify-center items-center bg-gray-800 text-white w-1/2 rounded-r-[50%] p-10">
+      <div class="flex items-center text-3xl font-bold mb-4">
+         <span class="text-[#FF7040]">Nutri</span>
+         <img src="/public/images/logo.png" alt="logo" class="w-12 mx-2" />
+         <span class="text-cyan-400">Track</span>
       </div>
-    </form>
-  </div>
+      <p class="text-center text-lg mb-8">
+         Créez votre compte dès maintenant et gérez votre alimentation
+      </p>
+
+      <!-- Indicateur de progression -->
+      <div class="w-full max-w-md">
+         <div class="flex justify-between mb-2">
+            <span class="text-sm text-gray-300"
+               >Étape <span id="current-step">1</span> sur 4</span
+            >
+            <span class="text-sm text-gray-300" id="step-title"
+               >Informations personnelles</span
+            >
+         </div>
+         <div class="w-full bg-gray-700 rounded-full h-2">
+            <div
+               id="progress-bar"
+               class="bg-gradient-to-r from-orange-400 to-cyan-400 h-2 rounded-full transition-all duration-300"
+               style="width: 25%"></div>
+         </div>
+      </div>
+   </div>
+
+   <!-- Partie droite -->
+   <div class="flex justify-center items-center w-1/2">
+      <form
+         id="wizard-form"
+         action="/register"
+         method="POST"
+         class="bg-white p-8 rounded-2xl shadow-xl border-1 border-transparent bg-clip-padding bg-gradient-to-r from-orange-400 to-cyan-400 w-full max-w-md">
+         <div class="bg-white p-6 rounded-xl">
+            <!-- Étape 1: Informations personnelles -->
+            <div id="step-1" class="wizard-step">
+               <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                  Informations personnelles
+               </h2>
+
+               <div class="mb-4">
+                  <label
+                     for="fullname"
+                     class="block mb-2 font-medium text-gray-700"
+                     >Nom complet</label
+                  >
+                  <input
+                     type="text"
+                     id="fullname"
+                     name="fullname"
+                     placeholder="Entrez votre nom complet"
+                     class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                     required />
+                  <div
+                     id="fullname-error"
+                     class="text-red-500 text-sm mt-1 hidden"></div>
+               </div>
+
+               <div class="mb-6">
+                  <label
+                     for="email"
+                     class="block mb-2 font-medium text-gray-700"
+                     >Email</label
+                  >
+                  <input
+                     type="email"
+                     id="email"
+                     name="email"
+                     placeholder="exemple@email.com"
+                     class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                     required />
+                  <div
+                     id="email-error"
+                     class="text-red-500 text-sm mt-1 hidden"></div>
+               </div>
+            </div>
+
+            <!-- Étape 2: Informations physiques -->
+            <div id="step-2" class="wizard-step hidden">
+               <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                  Informations physiques
+               </h2>
+
+               <div class="mb-4">
+                  <label class="block mb-2 font-medium text-gray-700"
+                     >Genre</label
+                  >
+                  <div class="grid grid-cols-2 gap-3">
+                     <label
+                        class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                        <input
+                           type="radio"
+                           name="gender"
+                           value="male"
+                           class="mr-3 text-orange-400 focus:ring-orange-400"
+                           required />
+                        <span>Homme</span>
+                     </label>
+                     <label
+                        class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                        <input
+                           type="radio"
+                           name="gender"
+                           value="female"
+                           class="mr-3 text-orange-400 focus:ring-orange-400"
+                           required />
+                        <span>Femme</span>
+                     </label>
+                  </div>
+                  <div
+                     id="gender-error"
+                     class="text-red-500 text-sm mt-1 hidden"></div>
+               </div>
+
+               <div class="mb-4">
+                  <label for="age" class="block mb-2 font-medium text-gray-700"
+                     >Âge</label
+                  >
+                  <input
+                     type="number"
+                     id="age"
+                     name="age"
+                     placeholder="25"
+                     min="16"
+                     max="120"
+                     class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                     required />
+                  <div
+                     id="age-error"
+                     class="text-red-500 text-sm mt-1 hidden"></div>
+               </div>
+
+               <div class="grid grid-cols-2 gap-4 mb-6">
+                  <div>
+                     <label
+                        for="weight"
+                        class="block mb-2 font-medium text-gray-700"
+                        >Poids (kg)</label
+                     >
+                     <input
+                        type="number"
+                        id="weight"
+                        name="weight"
+                        placeholder="70"
+                        min="30"
+                        max="300"
+                        step="0.1"
+                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                        required />
+                     <div
+                        id="weight-error"
+                        class="text-red-500 text-sm mt-1 hidden"></div>
+                  </div>
+                  <div>
+                     <label
+                        for="height"
+                        class="block mb-2 font-medium text-gray-700"
+                        >Taille (cm)</label
+                     >
+                     <input
+                        type="number"
+                        id="height"
+                        name="height"
+                        placeholder="175"
+                        min="100"
+                        max="250"
+                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                        required />
+                     <div
+                        id="height-error"
+                        class="text-red-500 text-sm mt-1 hidden"></div>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Étape 3: Objectifs et préférences -->
+            <div id="step-3" class="wizard-step hidden">
+               <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                  Objectifs et préférences
+               </h2>
+
+               <div class="mb-4">
+                  <label class="block mb-2 font-medium text-gray-700"
+                     >Objectif principal</label
+                  >
+                  <div class="space-y-2">
+                     <label
+                        class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                        <input
+                           type="radio"
+                           name="goal"
+                           value="Lose weight"
+                           class="mr-3 text-orange-400 focus:ring-orange-400"
+                           required />
+                        <span>Perdre du poids</span>
+                     </label>
+                     <label
+                        class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                        <input
+                           type="radio"
+                           name="goal"
+                           value="Gain weight"
+                           class="mr-3 text-orange-400 focus:ring-orange-400"
+                           required />
+                        <span>Prendre du poids</span>
+                     </label>
+                     <label
+                        class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                        <input
+                           type="radio"
+                           name="goal"
+                           value="Maintain weight"
+                           class="mr-3 text-orange-400 focus:ring-orange-400"
+                           required />
+                        <span>Maintenir mon poids</span>
+                     </label>
+                     <label
+                        class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                        <input
+                           type="radio"
+                           name="goal"
+                           value="Improve performance"
+                           class="mr-3 text-orange-400 focus:ring-orange-400"
+                           required />
+                        <span>Améliorer les performances</span>
+                     </label>
+                  </div>
+                  <div
+                     id="goal-error"
+                     class="text-red-500 text-sm mt-1 hidden"></div>
+               </div>
+
+               <div class="mb-4">
+                  <label class="block mb-2 font-medium text-gray-700"
+                     >Condition de santé</label
+                  >
+                  <div class="space-y-2">
+                     <label
+                        class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                        <input
+                           type="radio"
+                           name="condition_user"
+                           value="obesity"
+                           class="mr-3 text-orange-400 focus:ring-orange-400"
+                           required />
+                        <span>Obésité</span>
+                     </label>
+                     <label
+                        class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                        <input
+                           type="radio"
+                           name="condition_user"
+                           value="diabetes"
+                           class="mr-3 text-orange-400 focus:ring-orange-400"
+                           required />
+                        <span>Diabète</span>
+                     </label>
+                     <label
+                        class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                        <input
+                           type="radio"
+                           name="condition_user"
+                           value="hypertension"
+                           class="mr-3 text-orange-400 focus:ring-orange-400"
+                           required />
+                        <span>Hypertension</span>
+                     </label>
+                     <label
+                        class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                        <input
+                           type="radio"
+                           name="condition_user"
+                           value="athlete"
+                           class="mr-3 text-orange-400 focus:ring-orange-400"
+                           required />
+                        <span>Sportif/Athlète</span>
+                     </label>
+                  </div>
+                  <div
+                     id="condition-error"
+                     class="text-red-500 text-sm mt-1 hidden"></div>
+               </div>
+
+               <div class="mb-6">
+                  <label
+                     for="activity_level"
+                     class="block mb-2 font-medium text-gray-700"
+                     >Niveau d'activité</label
+                  >
+                  <select
+                     id="activity_level"
+                     name="activity_level"
+                     class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                     required>
+                     <option value="">Sélectionnez votre niveau</option>
+                     <option value="low">Faible (peu ou pas d'exercice)</option>
+                     <option value="medium">
+                        Modéré (exercice modéré 3-5 jours/semaine)
+                     </option>
+                     <option value="high">
+                        Élevé (exercice intense 6-7 jours/semaine)
+                     </option>
+                  </select>
+                  <div
+                     id="activity-error"
+                     class="text-red-500 text-sm mt-1 hidden"></div>
+               </div>
+            </div>
+
+            <!-- Étape 4: Mot de passe et confirmation -->
+            <div id="step-4" class="wizard-step hidden">
+               <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                  Sécurité du compte
+               </h2>
+
+               <div class="mb-4">
+                  <label
+                     for="password"
+                     class="block mb-2 font-medium text-gray-700"
+                     >Mot de passe</label
+                  >
+                  <input
+                     type="password"
+                     id="password"
+                     name="password"
+                     placeholder="Minimum 8 caractères"
+                     class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                     required />
+                  <div
+                     id="password-error"
+                     class="text-red-500 text-sm mt-1 hidden"></div>
+                  <div class="text-xs text-gray-500 mt-1">
+                     <ul id="password-requirements" class="hidden">
+                        <li id="req-length" class="text-red-500">
+                           • Au moins 8 caractères
+                        </li>
+                        <li id="req-uppercase" class="text-red-500">
+                           • Au moins une majuscule
+                        </li>
+                        <li id="req-lowercase" class="text-red-500">
+                           • Au moins une minuscule
+                        </li>
+                        <li id="req-number" class="text-red-500">
+                           • Au moins un chiffre
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+
+               <div class="mb-6">
+                  <label
+                     for="confirm_password"
+                     class="block mb-2 font-medium text-gray-700"
+                     >Confirmer le mot de passe</label
+                  >
+                  <input
+                     type="password"
+                     id="confirm_password"
+                     name="confirm_password"
+                     placeholder="Répétez votre mot de passe"
+                     class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                     required />
+                  <div
+                     id="confirm-password-error"
+                     class="text-red-500 text-sm mt-1 hidden"></div>
+               </div>
+
+               <div class="mb-6">
+                  <label class="flex items-start">
+                     <input
+                        type="checkbox"
+                        id="terms"
+                        name="terms"
+                        class="mt-1 mr-3 text-orange-400 focus:ring-orange-400"
+                        required />
+                     <span class="text-sm text-gray-700">
+                        J'accepte les
+                        <a href="#" class="text-orange-400 hover:underline"
+                           >conditions d'utilisation</a
+                        >
+                        et la
+                        <a href="#" class="text-orange-400 hover:underline"
+                           >politique de confidentialité</a
+                        >
+                     </span>
+                  </label>
+                  <div
+                     id="terms-error"
+                     class="text-red-500 text-sm mt-1 hidden"></div>
+               </div>
+            </div>
+
+            <!-- Boutons de navigation -->
+            <div class="flex gap-3">
+               <button
+                  type="button"
+                  id="prev-btn"
+                  class="px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition hidden">
+                  Précédent
+               </button>
+               <button
+                  type="button"
+                  id="next-btn"
+                  class="flex-1 py-3 bg-[#FF7040] text-white font-semibold rounded-lg hover:bg-[#FF5820] transition">
+                  Suivante
+               </button>
+               <button
+                  type="submit"
+                  id="submit-btn"
+                  class="flex-1 py-3 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition hidden">
+                  Créer le compte
+               </button>
+            </div>
+         </div>
+      </form>
+   </div>
 </div>
 
-<%- include('partials/footer') %>
+<script>
+   class RegistrationWizard {
+      constructor() {
+         this.currentStep = 1;
+         this.totalSteps = 4;
+         this.formData = {};
+         this.init();
+      }
+
+      init() {
+         this.bindEvents();
+         this.updateUI();
+      }
+
+      bindEvents() {
+         document
+            .getElementById('next-btn')
+            .addEventListener('click', () => this.nextStep());
+         document
+            .getElementById('prev-btn')
+            .addEventListener('click', () => this.prevStep());
+
+         // Validation en temps réel
+         document
+            .getElementById('email')
+            .addEventListener('blur', () => this.validateEmail());
+         document
+            .getElementById('password')
+            .addEventListener('input', () => this.validatePassword());
+         document
+            .getElementById('confirm_password')
+            .addEventListener('input', () => this.validateConfirmPassword());
+
+         // Soumission du formulaire
+         document
+            .getElementById('wizard-form')
+            .addEventListener('submit', e => this.handleSubmit(e));
+      }
+
+      nextStep() {
+         if (this.validateCurrentStep()) {
+            this.saveStepData();
+            this.currentStep++;
+            this.updateUI();
+         }
+      }
+
+      prevStep() {
+         if (this.currentStep > 1) {
+            this.currentStep--;
+            this.updateUI();
+         }
+      }
+
+      validateCurrentStep() {
+         let isValid = true;
+
+         switch (this.currentStep) {
+            case 1:
+               isValid = this.validateStep1();
+               break;
+            case 2:
+               isValid = this.validateStep2();
+               break;
+            case 3:
+               isValid = this.validateStep3();
+               break;
+            case 4:
+               isValid = this.validateStep4();
+               break;
+         }
+
+         return isValid;
+      }
+
+      validateStep1() {
+         const fullname = document.getElementById('fullname').value.trim();
+         const email = document.getElementById('email').value.trim();
+         let isValid = true;
+
+         // Validation nom complet
+         if (!fullname || fullname.length < 2) {
+            this.showError(
+               'fullname-error',
+               'Le nom complet doit contenir au moins 2 caractères'
+            );
+            isValid = false;
+         } else {
+            this.hideError('fullname-error');
+         }
+
+         // Validation email
+         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+         if (!email || !emailRegex.test(email)) {
+            this.showError('email-error', 'Veuillez entrer un email valide');
+            isValid = false;
+         } else {
+            this.hideError('email-error');
+         }
+
+         return isValid;
+      }
+
+      validateStep2() {
+         const gender = document.querySelector('input[name="gender"]:checked');
+         const age = parseInt(document.getElementById('age').value);
+         const weight = parseFloat(document.getElementById('weight').value);
+         const height = parseInt(document.getElementById('height').value);
+         let isValid = true;
+
+         // Validation genre
+         if (!gender) {
+            this.showError('gender-error', 'Veuillez sélectionner votre genre');
+            isValid = false;
+         } else {
+            this.hideError('gender-error');
+         }
+
+         // Validation âge
+         if (!age || age < 16 || age > 120) {
+            this.showError('age-error', "L'âge doit être entre 16 et 120 ans");
+            isValid = false;
+         } else {
+            this.hideError('age-error');
+         }
+
+         // Validation poids
+         if (!weight || weight < 30 || weight > 300) {
+            this.showError(
+               'weight-error',
+               'Le poids doit être entre 30 et 300 kg'
+            );
+            isValid = false;
+         } else {
+            this.hideError('weight-error');
+         }
+
+         // Validation taille
+         if (!height || height < 100 || height > 250) {
+            this.showError(
+               'height-error',
+               'La taille doit être entre 100 et 250 cm'
+            );
+            isValid = false;
+         } else {
+            this.hideError('height-error');
+         }
+
+         return isValid;
+      }
+
+      validateStep3() {
+         const goal = document.querySelector('input[name="goal"]:checked');
+         const condition = document.querySelector(
+            'input[name="condition_user"]:checked'
+         );
+         const activity = document.getElementById('activity_level').value;
+         let isValid = true;
+
+         if (!goal) {
+            this.showError('goal-error', 'Veuillez sélectionner un objectif');
+            isValid = false;
+         } else {
+            this.hideError('goal-error');
+         }
+
+         if (!condition) {
+            this.showError(
+               'condition-error',
+               'Veuillez sélectionner votre condition de santé'
+            );
+            isValid = false;
+         } else {
+            this.hideError('condition-error');
+         }
+
+         if (!activity) {
+            this.showError(
+               'activity-error',
+               "Veuillez sélectionner votre niveau d'activité"
+            );
+            isValid = false;
+         } else {
+            this.hideError('activity-error');
+         }
+
+         return isValid;
+      }
+
+      validateStep4() {
+         const password = document.getElementById('password').value;
+         const confirmPassword =
+            document.getElementById('confirm_password').value;
+         const terms = document.getElementById('terms').checked;
+         let isValid = true;
+
+         // Validation mot de passe
+         if (!this.isPasswordValid(password)) {
+            this.showError(
+               'password-error',
+               'Le mot de passe ne respecte pas les critères'
+            );
+            isValid = false;
+         } else {
+            this.hideError('password-error');
+         }
+
+         // Validation confirmation
+         if (password !== confirmPassword) {
+            this.showError(
+               'confirm-password-error',
+               'Les mots de passe ne correspondent pas'
+            );
+            isValid = false;
+         } else {
+            this.hideError('confirm-password-error');
+         }
+
+         // Validation conditions
+         if (!terms) {
+            this.showError('terms-error', 'Vous devez accepter les conditions');
+            isValid = false;
+         } else {
+            this.hideError('terms-error');
+         }
+
+         return isValid;
+      }
+
+      isPasswordValid(password) {
+         const requirements = {
+            length: password.length >= 8,
+            uppercase: /[A-Z]/.test(password),
+            lowercase: /[a-z]/.test(password),
+            number: /\d/.test(password),
+         };
+
+         // Mise à jour des indicateurs visuels
+         document.getElementById('req-length').className = requirements.length
+            ? 'text-green-500'
+            : 'text-red-500';
+         document.getElementById('req-uppercase').className =
+            requirements.uppercase ? 'text-green-500' : 'text-red-500';
+         document.getElementById('req-lowercase').className =
+            requirements.lowercase ? 'text-green-500' : 'text-red-500';
+         document.getElementById('req-number').className = requirements.number
+            ? 'text-green-500'
+            : 'text-red-500';
+
+         return Object.values(requirements).every(req => req);
+      }
+
+      validateEmail() {
+         const email = document.getElementById('email').value.trim();
+         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+         if (email && !emailRegex.test(email)) {
+            this.showError('email-error', 'Veuillez entrer un email valide');
+         } else {
+            this.hideError('email-error');
+         }
+      }
+
+      validatePassword() {
+         const password = document.getElementById('password').value;
+         const requirements = document.getElementById('password-requirements');
+
+         if (password) {
+            requirements.classList.remove('hidden');
+            this.isPasswordValid(password);
+         } else {
+            requirements.classList.add('hidden');
+         }
+      }
+
+      validateConfirmPassword() {
+         const password = document.getElementById('password').value;
+         const confirmPassword =
+            document.getElementById('confirm_password').value;
+
+         if (confirmPassword && password !== confirmPassword) {
+            this.showError(
+               'confirm-password-error',
+               'Les mots de passe ne correspondent pas'
+            );
+         } else {
+            this.hideError('confirm-password-error');
+         }
+      }
+
+      saveStepData() {
+         const currentStepElement = document.getElementById(
+            `step-${this.currentStep}`
+         );
+         const inputs = currentStepElement.querySelectorAll(
+            'input, select, textarea'
+         );
+
+         inputs.forEach(input => {
+            if (input.type === 'radio' || input.type === 'checkbox') {
+               if (input.checked) {
+                  this.formData[input.name] = input.value;
+               }
+            } else {
+               this.formData[input.name] = input.value;
+            }
+         });
+      }
+
+      updateUI() {
+         // Masquer toutes les étapes
+         for (let i = 1; i <= this.totalSteps; i++) {
+            document.getElementById(`step-${i}`).classList.add('hidden');
+         }
+
+         // Afficher l'étape actuelle
+         document
+            .getElementById(`step-${this.currentStep}`)
+            .classList.remove('hidden');
+
+         // Mettre à jour la progression
+         const progress = (this.currentStep / this.totalSteps) * 100;
+         document.getElementById('progress-bar').style.width = `${progress}%`;
+         document.getElementById('current-step').textContent = this.currentStep;
+
+         // Mettre à jour le titre de l'étape
+         const stepTitles = {
+            1: 'Informations personnelles',
+            2: 'Informations physiques',
+            3: 'Objectifs et préférences',
+            4: 'Sécurité du compte',
+         };
+         document.getElementById('step-title').textContent =
+            stepTitles[this.currentStep];
+
+         // Gestion des boutons
+         const prevBtn = document.getElementById('prev-btn');
+         const nextBtn = document.getElementById('next-btn');
+         const submitBtn = document.getElementById('submit-btn');
+
+         prevBtn.classList.toggle('hidden', this.currentStep === 1);
+         nextBtn.classList.toggle(
+            'hidden',
+            this.currentStep === this.totalSteps
+         );
+         submitBtn.classList.toggle(
+            'hidden',
+            this.currentStep !== this.totalSteps
+         );
+
+         if (this.currentStep === this.totalSteps) {
+            nextBtn.textContent = 'Suivante';
+         }
+      }
+
+      showError(elementId, message) {
+         const errorElement = document.getElementById(elementId);
+         errorElement.textContent = message;
+         errorElement.classList.remove('hidden');
+      }
+
+      hideError(elementId) {
+         const errorElement = document.getElementById(elementId);
+         errorElement.classList.add('hidden');
+      }
+
+      async handleSubmit(e) {
+         e.preventDefault();
+
+         if (this.validateCurrentStep()) {
+            this.saveStepData();
+
+            // Afficher un indicateur de chargement
+            const submitBtn = document.getElementById('submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Création du compte...';
+            submitBtn.disabled = true;
+
+            try {
+               // Préparer les données à envoyer
+               const formData = new FormData();
+               Object.keys(this.formData).forEach(key => {
+                  formData.append(key, this.formData[key]);
+               });
+
+               // Envoyer les données au serveur
+               fetch('/register', {
+                  method: 'POST',
+                  headers: {'Content-Type': 'application/json'},
+                  body: JSON.stringify(this.formData),
+               });
+
+               const result = await response.json();
+
+               if (result.success) {
+                  // Succès - rediriger vers le dashboard
+                  this.showSuccessMessage(
+                     'Compte créé avec succès ! Redirection...'
+                  );
+                  setTimeout(() => {
+                     window.location.href = result.redirect || '/dashboard';
+                  }, 2000);
+               } else {
+                  // Erreurs de validation
+                  this.showServerErrors(result.errors || [result.message]);
+               }
+            } catch (error) {
+               console.error("Erreur lors de l'inscription:", error);
+               this.showErrorMessage(
+                  'Une erreur est survenue. Veuillez réessayer.'
+               );
+            } finally {
+               // Restaurer le bouton
+               submitBtn.textContent = originalText;
+               submitBtn.disabled = false;
+            }
+         }
+      }
+
+      showSuccessMessage(message) {
+         // Créer un message de succès
+         const successDiv = document.createElement('div');
+         successDiv.className =
+            'fixed top-4 right-4 bg-green-500 text-white p-4 rounded-lg shadow-lg z-50';
+         successDiv.textContent = message;
+         document.body.appendChild(successDiv);
+
+         // Supprimer après 3 secondes
+         setTimeout(() => {
+            document.body.removeChild(successDiv);
+         }, 3000);
+      }
+
+      showErrorMessage(message) {
+         // Créer un message d'erreur
+         const errorDiv = document.createElement('div');
+         errorDiv.className =
+            'fixed top-4 right-4 bg-red-500 text-white p-4 rounded-lg shadow-lg z-50';
+         errorDiv.textContent = message;
+         document.body.appendChild(errorDiv);
+
+         // Supprimer après 5 secondes
+         setTimeout(() => {
+            document.body.removeChild(errorDiv);
+         }, 5000);
+      }
+
+      showServerErrors(errors) {
+         // Afficher les erreurs serveur dans les champs appropriés
+         errors.forEach(error => {
+            // Essayer de mapper l'erreur au bon champ
+            if (error.includes('nom complet')) {
+               this.showError('fullname-error', error);
+            } else if (error.includes('email')) {
+               this.showError('email-error', error);
+            } else if (error.includes('âge')) {
+               this.showError('age-error', error);
+            } else if (error.includes('poids')) {
+               this.showError('weight-error', error);
+            } else if (error.includes('taille')) {
+               this.showError('height-error', error);
+            } else if (error.includes('objectif')) {
+               this.showError('goal-error', error);
+            } else if (error.includes('activité')) {
+               this.showError('activity-error', error);
+            } else if (error.includes('mot de passe')) {
+               this.showError('password-error', error);
+            } else if (error.includes('conditions')) {
+               this.showError('terms-error', error);
+            } else {
+               // Erreur générale
+               this.showErrorMessage(error);
+            }
+         });
+      }
+   }
+
+   // Initialiser le wizard quand le DOM est chargé
+   document.addEventListener('DOMContentLoaded', () => {
+      new RegistrationWizard();
+   });
+</script>
