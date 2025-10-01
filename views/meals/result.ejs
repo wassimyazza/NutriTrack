@@ -1,0 +1,30 @@
+<div class="min-h-screen bg-gradient-to-b from-orange-50 to-teal-50 py-12 px-4">
+   <div class="max-w-2xl mx-auto">
+      <div class="bg-white rounded-3xl border-2 border-green-300 p-8 shadow-lg text-center">
+         <div class="mb-6">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+               <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+               </svg>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">
+               ✅ Image Téléchargée !
+            </h2>
+            <p class="text-gray-600">
+               <%= message %>
+            </p>
+         </div>
+
+         <div class="space-y-4">
+            <a href="/meals/upload"
+               class="block w-full bg-orange-500 text-white p-4 rounded-lg font-bold hover:bg-orange-600 transition">
+               📸 Analyser un autre repas
+            </a>
+            <a href="/dashboard"
+               class="block w-full bg-teal-500 text-white p-4 rounded-lg font-bold hover:bg-teal-600 transition">
+               🏠 Retour au tableau de bord
+            </a>
+         </div>
+      </div>
+   </div>
+</div>
