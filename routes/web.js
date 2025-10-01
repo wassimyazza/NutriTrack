@@ -6,6 +6,7 @@ import AuthController from '../app/controllers/AuthController.js';
 import DashboardController from '../app/controllers/DashboardController.js';
 import {isAuthenticated} from '../app/middlewares/authMiddleware.js';
 import MealController from '../app/controllers/MealController.js';
+import upload from '../config/multer.js';
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.post('/logout', AuthController.logout);
 
 // meal routes
 router.get('/meals/upload', isAuthenticated, MealController.uploadPage);
-router.post('/meals/analyze', MealController.analyze);
+router.post('/meals/analyze',isAuthenticated, upload.single("mealImage"), MealController.analyze);
 
 // user routers
 

@@ -16,24 +16,10 @@ const storage = multer.diskStorage({
     }
 });
 
-// File filter
-const fileFilter = (req, file, cb) => {
-    const allowedTypes = /jpeg|jpg|png|gif/;
-    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = allowedTypes.test(file.mimetype);
-
-    if (mimetype && extname) {
-        return cb(null, true);
-    } else {
-        cb(new Error('Only image files are allowed!'));
-    }
-};
-
-// Create multer instance
+// Create multer instance without fileFilter for testing
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
-    fileFilter: fileFilter
+    limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
 });
 
 export default upload;
