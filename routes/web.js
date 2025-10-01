@@ -17,7 +17,12 @@ router.post('/logout', AuthController.logout);
 
 // meal routes
 router.get('/meals/upload', isAuthenticated, MealController.uploadPage);
-router.post('/meals/analyze',isAuthenticated, upload.single("mealImage"), MealController.analyze);
+router.post(
+   '/meals/analyze',
+   isAuthenticated,
+   upload.single('mealImage'),
+   MealController.analyze
+);
 
 // user routers
 
@@ -36,6 +41,7 @@ router.get('/recommendations', RecommendationController.index);
 router.get('/', function (req, res) {
    res.render('home');
 });
+router.get('/historique', MealController.historiqueShow);
 
 router.get('/isAuth', function (req, res) {
    if (req.session.user) {
