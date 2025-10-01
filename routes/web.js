@@ -1,4 +1,4 @@
-// routes/web.js
+import {profileUpdateSchema} from '../app/validators/profileValidator.js';
 import express from 'express';
 import BookController from '../app/controllers/BookController.js';
 import RecommendationController from '../app/controllers/RecommendationController.js';
@@ -32,7 +32,12 @@ router.get('/register', AuthController.register);
 router.post('/register', AuthController.registerPost);
 // profile routes
 router.get('/profile', isAuthenticated, ProfileController.show);
-router.patch('/profile', isAuthenticated, ProfileController.update);
+router.patch(
+   '/profile',
+   isAuthenticated,
+   profileUpdateSchema,
+   ProfileController.update
+);
 
 router.get('/books', BookController.index);
 router.get('/books/:id', BookController.show);
