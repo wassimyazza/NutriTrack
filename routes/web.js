@@ -16,6 +16,7 @@ router.post('/logout', AuthController.logout);
 
 // meal routes
 router.get('/meals/upload', isAuthenticated, MealController.uploadPage);
+router.post('/meals/analyze', MealController.analyze);
 
 // user routers
 
