@@ -1,17 +1,74 @@
-<header id="header">
+<header
+   id="header"
+   class="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
    <nav
       id="navbar"
-      class="flex justify-between items-center gap-4 sm:gap-8 md:gap-12 lg:gap-20 px-2.5 py-1 font-semibold text-nowrap shadow shadow-orange-300">
-      <a href="/" id="logo" class="mr-auto"
-         ><img src="/images/logo.png" alt="logo"
-      /></a>
-      <a href="/dashboard" class="">Dashboard</a>
-      <a href="/recommendations">Recommendations</a>
-      <a href="/add-meal">Ajout de repas</a>
+      class="max-w-7xl mx-auto flex justify-between items-center gap-4 sm:gap-8 md:gap-12 px-6 py-4 font-semibold">
+      <a href="/" id="logo" class="flex items-center gap-2">
+         <img src="/images/logo.png" alt="logo" class="h-10" />
+      </a>
+
+      <div class="hidden md:flex items-center gap-8">
+         <a
+            id="dashboardBtn"
+            href="/dashboard"
+            class="text-gray-300 hover:text-[#FF7040] transition-colors"
+            >Dashboard</a
+         >
+         <a
+            id="recommendationsBtn"
+            href="/recommendations"
+            class="text-gray-300 hover:text-[#30D5C8] transition-colors"
+            >Recommendations</a
+         >
+         <a
+            id="addMealBtn"
+            href="/add-meal"
+            class="text-gray-300 hover:text-[#FF7040] transition-colors"
+            >Ajout de repas</a
+         >
+      </div>
+
       <a
          href="/profile"
-         class="ml-auto min-w-12 min-h-12 rounded-full bg-[#FF7040] leading-0 flex justify-center items-center font-bold text"
+         id="profil"
+         class="w-10 h-10 rounded-full bg-gradient-to-r from-[#FF7040] to-[#FF5820] flex justify-center items-center font-bold text-white hover:shadow-lg hover:shadow-[#FF7040]/50 transition-all"
          >i</a
       >
+      <a
+         href="/register"
+         class="text-gray-300 hover:text-[#FF7040] transition-colors block"
+         id="connection"
+         >connection</a
+      >
    </nav>
+
+   <script>
+      async function Permission() {
+         const btn = document.getElementById('connection');
+
+         const response = await fetch('/isAuth');
+         const data = await response.json();
+
+         // bouton principal
+         btn.style.display = data.auth ? 'none' : 'block';
+
+         // boutons de navigation
+         const btnNavIds = [
+            'dashboardBtn',
+            'addMealBtn',
+            'recommendationsBtn',
+            'profil',
+         ];
+
+         btnNavIds.forEach(id => {
+            const navBtn = document.getElementById(id);
+            if (navBtn) {
+               navBtn.style.display = data.auth ? 'block' : 'none';
+            }
+         });
+      }
+
+      Permission();
+   </script>
 </header>

@@ -1,11 +1,11 @@
-<div class="flex h-screen">
+<div class="flex min-h-screen">
    <!-- Partie gauche -->
    <div
-      class="flex flex-col justify-center items-center bg-gray-800 text-white w-1/2 rounded-r-[50%] p-10">
+      class="flex flex-col justify-center items-center bg-gray-800 text-white w-1/2 rounded-r-[50%] p-10 py-20">
       <div class="flex items-center text-3xl font-bold mb-4">
          <span class="text-[#FF7040]">Nutri</span>
          <img src="/public/images/logo.png" alt="logo" class="w-12 mx-2" />
-         <span class="text-cyan-400">Track</span>
+         <span class="text-[#30D5C8]">Track</span>
       </div>
       <p class="text-center text-lg mb-8">
          Créez votre compte dès maintenant et gérez votre alimentation
@@ -24,19 +24,19 @@
          <div class="w-full bg-gray-700 rounded-full h-2">
             <div
                id="progress-bar"
-               class="bg-gradient-to-r from-orange-400 to-cyan-400 h-2 rounded-full transition-all duration-300"
+               class="bg-gradient-to-r from-orange-400 to-[#30D5C8] h-2 rounded-full transition-all duration-300"
                style="width: 25%"></div>
          </div>
       </div>
    </div>
 
    <!-- Partie droite -->
-   <div class="flex justify-center items-center w-1/2">
+   <div class="flex justify-center items-center w-1/2 py-20">
       <form
          id="wizard-form"
          action="/register"
          method="POST"
-         class="bg-white p-8 rounded-2xl shadow-xl border-1 border-transparent bg-clip-padding bg-gradient-to-r from-orange-400 to-cyan-400 w-full max-w-md">
+         class="bg-white p-8 rounded-2xl shadow-xl border-1 border-transparent bg-clip-padding bg-gradient-to-r from-orange-400 to-[#30D5C8] w-full max-w-md">
          <div class="bg-white p-6 rounded-xl">
             <!-- Étape 1: Informations personnelles -->
             <div id="step-1" class="wizard-step">

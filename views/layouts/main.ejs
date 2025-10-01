@@ -2,11 +2,14 @@
 <html lang="fr">
    <head>
       <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>NutriTrack - Votre plan nutritionnel personnalisé par l'IA</title>
       <link rel="stylesheet" href="/css/output.css" />
    </head>
-   <body class="flex flex-col min-h-screen">
+
+   <body class="flex flex-col min-h-screen bg-gray-900 text-white">
       <%- include('../partials/header.ejs') %>
-      <main class="flex-1"><%- body %></main>
+      <main class="flex-1 pt-16"><%- body %></main>
 
       <%- include('../partials/footer.ejs') %>
    </body>

@@ -27,4 +27,16 @@ router.post('/books/:id/delete', BookController.destroy);
 
 router.get('/recommendations', RecommendationController.index);
 
+router.get('/', function (req, res) {
+   res.render('home');
+});
+
+router.get('/isAuth', function (req, res) {
+   if (req.session.user) {
+      res.json({auth: true});
+   } else {
+      res.json({auth: false});
+   }
+});
+
 export default router;
