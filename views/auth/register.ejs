@@ -55,7 +55,7 @@
                      id="fullname"
                      name="fullname"
                      placeholder="Entrez votre nom complet"
-                     class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                     class="w-full text-gray-600 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
                      required />
                   <div
                      id="fullname-error"
@@ -73,7 +73,7 @@
                      id="email"
                      name="email"
                      placeholder="exemple@email.com"
-                     class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                     class="w-full p-3 border text-gray-600 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
                      required />
                   <div
                      id="email-error"
@@ -98,9 +98,9 @@
                            type="radio"
                            name="gender"
                            value="male"
-                           class="mr-3 text-orange-400 focus:ring-orange-400"
+                           class="mr-3 text-orange-400 text-gray-600 focus:ring-orange-400"
                            required />
-                        <span>Homme</span>
+                        <span class="text-gray-600">Homme</span>
                      </label>
                      <label
                         class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
@@ -108,9 +108,9 @@
                            type="radio"
                            name="gender"
                            value="female"
-                           class="mr-3 text-orange-400 focus:ring-orange-400"
+                           class="mr-3 text-orange-400 text-gray-600 focus:ring-orange-400"
                            required />
-                        <span>Femme</span>
+                        <span class="text-gray-600">Femme</span>
                      </label>
                   </div>
                   <div
@@ -129,7 +129,7 @@
                      placeholder="25"
                      min="16"
                      max="120"
-                     class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                     class="w-full p-3 border text-gray-600 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
                      required />
                   <div
                      id="age-error"
@@ -151,7 +151,7 @@
                         min="30"
                         max="300"
                         step="0.1"
-                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                        class="w-full p-3 border text-gray-600 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
                         required />
                      <div
                         id="weight-error"
@@ -170,7 +170,7 @@
                         placeholder="175"
                         min="100"
                         max="250"
-                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                        class="w-full p-3 border border-gray-300 text-gray-600 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
                         required />
                      <div
                         id="height-error"
@@ -198,7 +198,7 @@
                            value="Lose weight"
                            class="mr-3 text-orange-400 focus:ring-orange-400"
                            required />
-                        <span>Perdre du poids</span>
+                        <span class="text-gray-600">Perdre du poids</span>
                      </label>
                      <label
                         class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
@@ -208,7 +208,7 @@
                            value="Gain weight"
                            class="mr-3 text-orange-400 focus:ring-orange-400"
                            required />
-                        <span>Prendre du poids</span>
+                        <span class="text-gray-600">Prendre du poids</span>
                      </label>
                      <label
                         class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
@@ -218,7 +218,7 @@
                            value="Maintain weight"
                            class="mr-3 text-orange-400 focus:ring-orange-400"
                            required />
-                        <span>Maintenir mon poids</span>
+                        <span class="text-gray-600">Maintenir mon poids</span>
                      </label>
                      <label
                         class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
@@ -228,7 +228,9 @@
                            value="Improve performance"
                            class="mr-3 text-orange-400 focus:ring-orange-400"
                            required />
-                        <span>Améliorer les performances</span>
+                        <span class="text-gray-600"
+                           >Améliorer les performances</span
+                        >
                      </label>
                   </div>
                   <div
@@ -249,7 +251,7 @@
                            value="obesity"
                            class="mr-3 text-orange-400 focus:ring-orange-400"
                            required />
-                        <span>Obésité</span>
+                        <span class="text-gray-600">Obésité</span>
                      </label>
                      <label
                         class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
@@ -259,7 +261,7 @@
                            value="diabetes"
                            class="mr-3 text-orange-400 focus:ring-orange-400"
                            required />
-                        <span>Diabète</span>
+                        <span class="text-gray-600">Diabète</span>
                      </label>
                      <label
                         class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
@@ -269,7 +271,7 @@
                            value="hypertension"
                            class="mr-3 text-orange-400 focus:ring-orange-400"
                            required />
-                        <span>Hypertension</span>
+                        <span class="text-gray-600">Hypertension</span>
                      </label>
                      <label
                         class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
@@ -279,7 +281,7 @@
                            value="athlete"
                            class="mr-3 text-orange-400 focus:ring-orange-400"
                            required />
-                        <span>Sportif/Athlète</span>
+                        <span class="text-gray-600">Sportif/Athlète</span>
                      </label>
                   </div>
                   <div
@@ -296,14 +298,18 @@
                   <select
                      id="activity_level"
                      name="activity_level"
-                     class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                     class="text-gray-600 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
                      required>
-                     <option value="">Sélectionnez votre niveau</option>
-                     <option value="low">Faible (peu ou pas d'exercice)</option>
-                     <option value="medium">
+                     <option class="text-gray-600" value="">
+                        Sélectionnez votre niveau
+                     </option>
+                     <option class="text-gray-600" value="low">
+                        Faible (peu ou pas d'exercice)
+                     </option>
+                     <option class="text-gray-600" value="medium">
                         Modéré (exercice modéré 3-5 jours/semaine)
                      </option>
-                     <option value="high">
+                     <option class="text-gray-600" value="high">
                         Élevé (exercice intense 6-7 jours/semaine)
                      </option>
                   </select>
@@ -330,7 +336,7 @@
                      id="password"
                      name="password"
                      placeholder="Minimum 8 caractères"
-                     class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                     class="text-gray-600 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
                      required />
                   <div
                      id="password-error"
@@ -364,7 +370,7 @@
                      id="confirm_password"
                      name="confirm_password"
                      placeholder="Répétez votre mot de passe"
-                     class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
+                     class="text-gray-600 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-all"
                      required />
                   <div
                      id="confirm-password-error"
