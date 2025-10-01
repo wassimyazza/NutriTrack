@@ -34,6 +34,7 @@
       "**/*": "prettier --write --ignore-unknown"
    },
    "dependencies": {
+      "@google/generative-ai": "^0.24.1",
       "@tailwindcss/cli": "^4.1.13",
       "bcrypt": "^6.0.0",
       "bcryptjs": "^3.0.2",
@@ -46,6 +47,7 @@
       "multer": "^2.0.2",
       "mysql2": "^3.15.0",
       "nodemon": "^3.1.10",
+      "openai": "^6.0.0",
       "tailwindcss": "^4.1.13"
    }
 }
