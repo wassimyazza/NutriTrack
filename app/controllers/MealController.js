@@ -1,3 +1,5 @@
+import database from '../../database/db';
+
 export default class MealController {
    static uploadPage(req, res) {
       res.render('meals/upload', {user: req.session.user});
@@ -29,7 +31,16 @@ export default class MealController {
       }
    }
 
-   static historiqueShow(req, res) {
-      res.render('meals/historique');
+   static async historiqueShow(req, res) {
+      const id = req.session.user;
+      const connection = database.getConnection();
+      const historiqueUser = await connection.query(
+         `
+      Select * from meals where user_id = ? ;
+      `,
+         [id]
+      );
+
+      res.render('meals/historique', historiqueUser);
    }
 }
