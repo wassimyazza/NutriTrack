@@ -10,15 +10,12 @@ export default class AuthController {
       try {
          const {email, password} = req.body;
 
-         // Trouver l'utilisateur par email
          const user = await User.findByEmail(email);
          if (!user) return res.send('Email or password incorrect');
 
-         // Vérifier le mot de passe
          const match = await bcrypt.compare(password, user.password);
          if (!match) return res.send('Email or password incorrect');
 
-         // Créer la session
          req.session.user = {
             id: user.id,
             name: user.name,

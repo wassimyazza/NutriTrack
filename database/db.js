@@ -10,7 +10,6 @@ class Database {
       this.#connection = null;
    }
 
-   // méthode pour se connecter
    async connect() {
       try {
          this.#connection = await mysql.createConnection(this.config);
@@ -25,7 +24,6 @@ class Database {
       }
    }
 
-   // getter pour récupérer la connexion
    getConnection() {
       if (!this.#connection) {
          throw new Error(
@@ -35,7 +33,6 @@ class Database {
       return this.#connection;
    }
 
-   // initialize the database
    async init() {
       try {
          const [result] = await this.getConnection().query(
@@ -72,6 +69,7 @@ class Database {
             CREATE TABLE meals (
                id INT AUTO_INCREMENT PRIMARY KEY,
                user_id INT NOT NULL,
+               name VARCHAR(100) DEFAULT 'Sans nom',
                image_path VARCHAR(255),
                analyzed TINYINT(1) DEFAULT 0,
                calories DECIMAL(6,2),
@@ -109,19 +107,19 @@ class Database {
             await this.getConnection().query(`
             INSERT INTO users (name, email, password, age, gender, height, weight, activity_level, goal, condition_user)
             VALUES
-            ('John Doe', 'john@example.com', '$2y$12$V9FJ9kTJ3VzDMPjl3X232.L52KqFTbVaOBAKtt8Q9ZGLxL0FC4XW.', 35, 'male', 175.00, 85.00, 'medium', 'Lose weight', 'obesity'),
-            ('Jane Smith', 'jane@example.com', '$2y$12$V9FJ9kTJ3VzDMPjl3X232.L52KqFTbVaOBAKtt8Q9ZGLxL0FC4XW.', 29, 'female', 162.00, 70.00, 'low', 'Control diabetes', 'diabetes'),
-            ('Mike Johnson', 'mike@example.com', '$2y$12$V9FJ9kTJ3VzDMPjl3X232.L52KqFTbVaOBAKtt8Q9ZGLxL0FC4XW.', 40, 'male', 180.00, 95.00, 'high', 'Improve performance', 'athlete'),
-            ('Sara Lee', 'sara@example.com', '$2y$12$V9FJ9kTJ3VzDMPjl3X232.L52KqFTbVaOBAKtt8Q9ZGLxL0FC4XW.', 32, 'female', 168.00, 72.00, 'medium', 'Lose weight', 'hypertension');
+            ('John Doe', 'john@example.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 35, 'male', 175.00, 85.00, 'medium', 'Lose weight', 'obesity'),
+            ('Jane Smith', 'jane@example.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 29, 'female', 162.00, 70.00, 'low', 'Control diabetes', 'diabetes'),
+            ('Mike Johnson', 'mike@example.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 40, 'male', 180.00, 95.00, 'high', 'Improve performance', 'athlete'),
+            ('Sara Lee', 'sara@example.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 32, 'female', 168.00, 72.00, 'medium', 'Lose weight', 'hypertension');
             `);
 
             await this.getConnection().query(`
-            INSERT INTO meals (user_id, image_path, analyzed, calories, proteins, carbs, fats, created_at)
+            INSERT INTO meals (user_id, name, image_path, analyzed, calories, proteins, carbs, fats, created_at)
             VALUES
-            (1, '/uploads/meals/oatmeal_milk_20250929.jpg', 1, 350, 12, 55, 8, '2025-09-29 08:00:00'),
-            (1, '/uploads/meals/grilled_chicken_salad_20250929.jpg', 1, 400, 35, 20, 15, '2025-09-29 12:30:00'),
-            (2, '/uploads/meals/banana_smoothie_20250929.jpg', 1, 200, 5, 40, 2, '2025-09-29 10:00:00'),
-            (3, '/uploads/meals/protein_shake_20250929.jpg', 1, 250, 25, 10, 5, '2025-09-29 07:30:00');
+            (1, 'Oatmeal with Milk', '/uploads/meals/oatmeal_milk_20250929.jpg', 1, 350, 12, 55, 8, '2025-09-29 08:00:00'),
+            (1, 'Grilled Chicken Salad', '/uploads/meals/grilled_chicken_salad_20250929.jpg', 1, 400, 35, 20, 15, '2025-09-29 12:30:00'),
+            (2, 'Banana Smoothie', '/uploads/meals/banana_smoothie_20250929.jpg', 1, 200, 5, 40, 2, '2025-09-29 10:00:00'),
+            (3, 'Protein Shake', '/uploads/meals/protein_shake_20250929.jpg', 1, 250, 25, 10, 5, '2025-09-29 07:30:00');
             `);
 
             await this.getConnection().query(`
@@ -152,7 +150,6 @@ class Database {
    }
 }
 
-// Configuration de la base de données
 const dbConfig = {
    host: process.env.DB_HOST || 'localhost',
    user: process.env.DB_USER || 'root',
@@ -160,7 +157,6 @@ const dbConfig = {
 };
 
 const database = new Database(dbConfig);
-// connexion lors du démarrage
 await database.connect();
 await database.init();
 export default database;
