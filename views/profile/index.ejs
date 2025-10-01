@@ -7,95 +7,6 @@
       <form action="/profile?_method=PATCH" method="POST" class="space-y-6">
          <!-- Name -->
          <div>
-            <label
-               class="block text-sm font-medium text-[#333333] mb-2"
-               for="name">
-               Nom complet
-            </label>
-            <input
-               type="text"
-               id="name"
-               name="name"
-               value="<%- user.name %>"
-               placeholder="Entrez votre nom"
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#30D5C8] focus:outline-none" />
-         </div>
-
-         <!-- Email -->
-         <div>
-            <label
-               class="block text-sm font-medium text-[#333333] mb-2"
-               for="email">
-               Email
-            </label>
-            <input
-               type="email"
-               id="email"
-               value="<%- user.email %>"
-               name="email"
-               placeholder="exemple@email.com"
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#30D5C8] focus:outline-none" />
-         </div>
-
-         <!-- Password -->
-         <div>
-            <label
-               class="block text-sm font-medium text-[#333333] mb-2"
-               for="password">
-               Mot de passe
-            </label>
-            <input
-               type="password"
-               id="password"
-               name="password"
-               placeholder="********"
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#30D5C8] focus:outline-none" />
-         </div>
-
-         <!-- Age / Gender -->
-         <div class="grid grid-cols-2 gap-4">
-            <div>
-               <label
-                  class="block text-sm font-medium text-[#333333] mb-2"
-                  for="age">
-                  Âge
-               </label>
-               <input
-                  type="number"
-                  id="age"
-                  name="age"
-                  value="<%- user.age%>"
-                  placeholder="age"
-                  min="0"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#30D5C8] focus:outline-none" />
-            </div>
-
-            <div>
-               <label
-                  class="block text-sm font-medium text-[#333333] mb-2"
-                  for="gender">
-                  Genre
-               </label>
-               <select
-                  id="gender"
-                  name="gender"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#30D5C8] focus:outline-none">
-                  <option value="male" <%- user.gender === "male" ? "selected" : '' %> >Homme</option>
-                  <option value="female" <%- user.gender === "female" ? 'selected' : '' %>>Femme</option>
-               </select>
-            </div>
-         </div>
-
-         <!-- Height / Weight -->
-         <div class="grid grid-cols-2 gap-4"><div class="flex justify-center items-center min-h-screen bg-[#f5f5f5]">
-   <div class="w-full max-w-3xl bg-white shadow-lg p-8 m-20">
-      <h2 class="text-2xl font-bold text-[#333333] mb-6 text-center">
-         Modifier le profil
-      </h2>
-
-      <form action="/profile?_method=PATCH" method="POST" class="space-y-6">
-         <!-- Name -->
-         <div>
             <label class="block text-sm font-medium text-[#333333] mb-2" for="name">
                Nom complet
             </label>
@@ -215,14 +126,16 @@
             <label class="block text-sm font-medium text-[#333333] mb-2" for="goal">
                Objectif
             </label>
-            <input
-               type="text"
+             <select
                id="goal"
                name="goal"
-               value="<%- user.goal %>"
-               placeholder="Ex : Perte de poids, prise de masse..."
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#30D5C8] focus:outline-none" />
-         </div>
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#30D5C8] focus:outline-none">
+               <option value="Lose weight" <%= user.goal === "Lose weight" ? "selected" : "" %>>Perdre du poids</option>
+               <option value="Gain weight" <%= user.goal === "Gain weight" ? "selected" : "" %>>Prendre du poids</option>
+               <option value="Maintain weight" <%= user.goal === "Maintain weight" ? "selected" : "" %>>Maintenir mon poids</option>
+               <option value="Improve performance" <%= user.goal === "Improve performance" ? "selected" : "" %>>Améliorer les performances</option>
+            </select>
+            </div>
 
          <!-- Condition -->
          <div>
@@ -237,101 +150,6 @@
                <option value="hypertension" <%= user.condition_user === "hypertension" ? "selected" : "" %>>Hypertension</option>
                <option value="obesity" <%= user.condition_user === "obesity" ? "selected" : "" %>>Obésité</option>
                <option value="athlete" <%= user.condition_user === "athlete" ? "selected" : "" %>>Athlète</option>
-            </select>
-         </div>
-
-         <!-- Submit -->
-         <div class="flex justify-center">
-            <button
-               type="submit"
-               class="px-6 py-3 rounded-lg font-semibold text-white bg-[#FF5820] hover:bg-[#30D5C8] transition">
-               Sauvegarder les modifications
-            </button>
-         </div>
-      </form>
-   </div>
-</div>
-
-            <div>
-               <label
-                  class="block text-sm font-medium text-[#333333] mb-2"
-                  for="height">
-                  Taille (cm)
-               </label>
-               <input
-                  type="number"
-                  step="0.01"
-                  id="height"
-                  name="height"
-                  value="<%- user.height%>"
-                  placeholder="height"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#30D5C8] focus:outline-none" />
-            </div>
-            <div>
-               <label
-                  class="block text-sm font-medium text-[#333333] mb-2"
-                  for="weight">
-                  Poids (kg)
-               </label>
-               <input
-                  type="number"
-                  step="0.01"
-                  id="weight"
-                  placeholder="weight"
-                  name="weight"
-                  value="<%- user.weight %>"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#30D5C8] focus:outline-none" />
-            </div>
-         </div>
-
-         <!-- Activity Level -->
-         <div>
-            <label
-               class="block text-sm font-medium text-[#333333] mb-2"
-               for="activity_level">
-               Niveau d'activité
-            </label>
-            <select
-               id="activity_level"
-               name="activity_level"
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#30D5C8] focus:outline-none">
-               <option <%- user.activity_level === "low" ? 'selected' : "" %> value="low">Faible</option>
-               <option  <%- user.activity_level === "medium" ? 'selected' : "" %> value="medium">Moyen</option>
-               <option  <%- user.activity_level === "high" ? 'selected' : "" %> value="high">Élevé</option>
-            </select>
-         </div>
-
-         <!-- Goal -->
-         <div>
-            <label
-               class="block text-sm font-medium text-[#333333] mb-2"
-               for="goal">
-               Objectif
-            </label>
-            <input
-               type="text"
-               id="goal"
-               name="goal"
-               value="<%- user.goal %>"
-               placeholder="Ex : Perte de poids, prise de masse..."
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#30D5C8] focus:outline-none" />
-         </div>
-
-         <!-- Condition -->
-         <div>
-            <label
-               class="block text-sm font-medium text-[#333333] mb-2"
-               for="condition_user">
-               Condition
-            </label>
-            <select
-               id="condition_user"
-               name="condition_user"
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#30D5C8] focus:outline-none">
-               <option  value="diabetes" <%- user.condition_user === "diabetes" ? 'selected' : "" %>>Diabète</option>
-               <option  value="hypertension" <%- user.condition_user === "hypertension" ? 'selected' : "" %>>Hypertension</option>
-               <option  value="obesity" <%- user.condition_user === "obesity" ? 'selected' : "" %>>Obésité</option>
-               <option  value="athlete" <%- user.condition_user === "athlete" ? 'selected' : "" %>>Athlète</option>
             </select>
          </div>
 
