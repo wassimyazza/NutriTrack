@@ -1,3 +1,5 @@
+import Meal from "../models/Meal.js";
+
 export default class MealController {
    static uploadPage(req, res) {
       res.render('meals/upload', {user: req.session.user});
@@ -13,10 +15,15 @@ export default class MealController {
 
          const image_name = req.file.filename;
          const image_path = "/images/uploads/" + image_name;
-         const meal_name = req.body.mealName || null;
-         const meal_notes = req.body.notes || null;
 
-         res.send('<img src="'+image_path+'"><br><h1>'+meal_name+'</h1><h2>'+meal_notes+'</h2>');
+         const FinalData = {
+            user_id: req.session.user.id,
+            image_path: image_name,    
+         }
+
+         Meal.create(FinalData);
+
+         res.send('<img src="'+image_path+'">');
 
          
 
