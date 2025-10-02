@@ -24,6 +24,7 @@ router.post(
    upload.single('mealImage'),
    MealController.analyze
 );
+router.get('/meals/:id', isAuthenticated, MealController.show);
 
 // user routers
 

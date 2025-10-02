@@ -87,4 +87,8 @@ export default class MealController {
          return res.json('error');
       }
    }
+
+   static show(req, res) {
+      res.render('meals/show', {user: req.session.user});
+   }
 }
