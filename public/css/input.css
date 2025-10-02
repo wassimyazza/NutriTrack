@@ -3,3 +3,10 @@
 html {
    @apply text-xs md:text-sm lg:text-base;
 }
+
+@theme {
+   --color-primary: #30d5c8;
+   --color-secondary: #ff7040;
+   --color-dark: #0a1439;
+   --color-darker: #020b2a;
+}
