@@ -11,13 +11,13 @@
     class="w-72 bg-white shadow-md rounded-2xl overflow-hidden transition transform hover:scale-105 hover:shadow-lg">
     
     <img
-      src="http://localhost:5000/public/images/<%= meal.image_path || '/images/meal_placeholder.png' %>"
+      src="/images<%= meal.image_path || '/images/meal_placeholder.png' %>"
       alt="Image du plat"
       class="w-full h-48 object-cover" />
     
     <div class="p-4">
       <!-- Nom du plat -->
-      <h2 class="text-lg font-bold mb-1"><%= meal.name %></h2>
+      <h2 class="text-lg font-bold mb-1 text-gray-700"><%= meal.name %></h2>
 
       <!-- Valeurs nutritionnelles -->
       <p class="text-gray-600 text-sm mb-3">
