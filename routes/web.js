@@ -51,6 +51,7 @@ router.get('/', function (req, res) {
    res.render('home');
 });
 router.get('/historique', MealController.historiqueShow);
+router.delete('/historique/:id', MealController.deletehistorique);
 
 router.get('/isAuth', function (req, res) {
    if (req.session.user) {

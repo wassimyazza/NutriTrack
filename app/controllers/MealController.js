@@ -1,5 +1,6 @@
 import Meal from '../models/Meal.js';
-
+import database from '../../database/db.js';
+import mysql from 'mysql2/promise';
 export default class MealController {
    static uploadPage(req, res) {
       res.render('meals/upload', {user: req.session.user});
@@ -28,7 +29,28 @@ export default class MealController {
       }
    }
 
-   static historiqueShow(req, res) {
-      res.render('meals/historique');
+   static async historiqueShow(req, res) {
+      const user_id = req.session.user.id;
+      console.log('hello ', user_id);
+      const connection = database.getConnection();
+      const [rows] = await connection.query(
+         `
+         Select * from meals where user_id = ? 
+         `,
+         [user_id]
+      );
+
+      res.render('meals/historique', {meals: rows});
+   }
+
+   static async deletehistorique(req, res) {
+      const id_meal = req.params.id;
+      console.log(id_meal);
+      try {
+         Meal.delete(id_meal);
+         return res.json('deleted');
+      } catch (e) {
+         return res.json('error');
+      }
    }
 }
