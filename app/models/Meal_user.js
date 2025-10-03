@@ -9,6 +9,7 @@ export default class Meal_user extends Model {
       const [rows] = await connection.query(
          `
             SELECT 
+                
                 user_meals.id AS user_meal_id,
                 user_meals.date,
                 user_meals.created_at AS user_meal_created,
