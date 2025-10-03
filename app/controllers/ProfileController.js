@@ -6,7 +6,7 @@ export default class ProfileController {
    static async show(req, res) {
       const user_id = req.session.user.id;
       const user = await User.find(user_id);
-      res.render('profile/index', {user, errors: {}});
+      res.render('profile/index', {user, errors: {},authUser: req.session.user});
    }
 
    static async update(req, res) {
