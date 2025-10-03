@@ -42,7 +42,7 @@ router.patch(
 router.get('/recommendations', RecommendationController.index);
 
 router.get('/', function (req, res) {
-   res.render('home');
+   res.render('home',{authUser: req.session.user});
 });
 router.get('/historique', MealController.historiqueShow);
 router.delete('/historique/:id', MealController.deletehistorique);

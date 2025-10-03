@@ -3,7 +3,7 @@ import Meal from '../models/Meal.js';
 import geminiService from '../services/geminiService.js';
 import path from 'path';
 import {fileURLToPath} from 'url';
-import Meal_user from '../models/Meal_user.js';
+import User from '../models/User.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,22 +13,21 @@ export default class MealController {
       res.render('meals/upload', {user: req.session.user,authUser: req.session.user});
    }
 
-   static async analyze(req, res) {
-      try {
-         if (!req.file) {
-            return res.status(400).send('No image uploaded');
+   static async analyze(req, res){
+      try{
+         if(!req.file){
+            return res.status(400).send("No image uploaded");
          }
 
          const image_name = req.file.filename;
-         const image_path = '/images/uploads/' + image_name;
-         const fullImagePath = path.join(
-            __dirname,
-            '../../public/images/uploads/',
-            req.file.filename
-         );
+         const image_path = "/images/uploads/" + image_name;
+         const fullImagePath = path.join(__dirname, '../../public/images/uploads/', req.file.filename);
+
+         const userId = req.session.user.id;
+         const user = await User.findById(userId);
 
          console.log('Analyzing image with Gemini AI...');
-         const analysis = await geminiService.analyzeMealImage(fullImagePath);
+         const analysis = await geminiService.analyzeMealImage(fullImagePath, user);
          console.log('Analysis result:', analysis);
 
          const mealData = {
@@ -39,15 +38,12 @@ export default class MealController {
             calories: analysis.calories || 0,
             proteins: analysis.proteins || 0,
             carbs: analysis.carbs || 0,
-            fats: analysis.fats || 0,
+            fats: analysis.fats || 0
          };
 
-         await Meal.createWithRecommendations(
-            mealData,
-            analysis.recommendations
-         );
+         await Meal.createWithRecommendations(mealData, analysis.recommendations);
 
-         res.render('meals/result', {
+         res.render('meals/result', { 
             user: req.session.user,
             imagePath: image_path,
             mealName: req.body.mealName || 'Sans nom',
@@ -56,11 +52,10 @@ export default class MealController {
             analysis: analysis,
             authUser: req.session.user
          });
-      } catch (err) {
-         console.error('Analyse function errors: ', err);
-         res.status(500).send(
-            'An error occurred during analysis: ' + err.message
-         );
+
+      }catch(err){
+         console.error("Analyse function errors: ", err);
+         res.status(500).send('An error occurred during analysis: ' + err.message);
       }
    }
 
