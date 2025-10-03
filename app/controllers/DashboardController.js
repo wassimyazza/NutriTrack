@@ -13,9 +13,8 @@ export default class DashboardController {
       const user = await User.find(userId);
       const allMeals = await Meal.all();
       const meals = allMeals
-         .filter(meal => meal.user_id == 2)
-         .sort((a, b) => b - a)
-         .slice(0, 3);
+         .filter(meal => meal.user_id == userId)
+         .sort((a, b) => b - a);
 
       meals.forEach(
          meal =>
@@ -42,6 +41,7 @@ export default class DashboardController {
          user,
          meals,
          recommendations,
+         authUser: req.session.user,
       });
    }
 }

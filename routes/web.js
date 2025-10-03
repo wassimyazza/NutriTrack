@@ -1,6 +1,5 @@
 import {profileUpdateSchema} from '../app/validators/profileValidator.js';
 import express from 'express';
-import BookController from '../app/controllers/BookController.js';
 import RecommendationController from '../app/controllers/RecommendationController.js';
 import AuthController from '../app/controllers/AuthController.js';
 import DashboardController from '../app/controllers/DashboardController.js';
@@ -25,6 +24,11 @@ router.post(
    MealController.analyze
 );
 router.get('/meals/:id', isAuthenticated, MealController.show);
+router.post(
+   '/meals/:id/add-to-eaten',
+   isAuthenticated,
+   MealController.addToEaten
+);
 
 // user routers
 
@@ -40,16 +44,10 @@ router.patch(
    ProfileController.update
 );
 
-router.get('/books', BookController.index);
-router.get('/books/:id', BookController.show);
-router.post('/books', BookController.store);
-router.post('/books/:id/update', BookController.update);
-router.post('/books/:id/delete', BookController.destroy);
-
 router.get('/recommendations', RecommendationController.index);
 
 router.get('/', function (req, res) {
-   res.render('home');
+   res.render('home', {authUser: req.session.user});
 });
 router.get('/historique', MealController.historiqueShow);
 router.delete('/historique/:id', MealController.deletehistorique);

@@ -3,14 +3,17 @@ import Meal from '../models/Meal.js';
 import geminiService from '../services/geminiService.js';
 import path from 'path';
 import {fileURLToPath} from 'url';
-import Meal_user from '../models/Meal_user.js';
+import User from '../models/User.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default class MealController {
    static uploadPage(req, res) {
-      res.render('meals/upload', {user: req.session.user});
+      res.render('meals/upload', {
+         user: req.session.user,
+         authUser: req.session.user,
+      });
    }
 
    static async analyze(req, res) {
@@ -27,8 +30,14 @@ export default class MealController {
             req.file.filename
          );
 
+         const userId = req.session.user.id;
+         const user = await User.findById(userId);
+
          console.log('Analyzing image with Gemini AI...');
-         const analysis = await geminiService.analyzeMealImage(fullImagePath);
+         const analysis = await geminiService.analyzeMealImage(
+            fullImagePath,
+            user
+         );
          console.log('Analysis result:', analysis);
 
          const mealData = {
@@ -54,6 +63,7 @@ export default class MealController {
             notes: req.body.notes || 'Aucune note',
             filename: image_name,
             analysis: analysis,
+            authUser: req.session.user,
          });
       } catch (err) {
          console.error('Analyse function errors: ', err);
@@ -64,14 +74,17 @@ export default class MealController {
    }
 
    static async historiqueShow(req, res) {
-      try {
-         const user_id = req.session.user.id;
-         const meals = await Meal_user.findByUser(user_id);
-         res.render('meals/historique', {meals});
-      } catch (error) {
-         console.error(error);
-         res.status(500).send('Erreur serveur');
-      }
+      const user_id = req.session.user.id;
+      console.log('hello ', user_id);
+      const connection = database.getConnection();
+      const [rows] = await connection.query(
+         `
+         Select * from meals where user_id = ? 
+         `,
+         [user_id]
+      );
+
+      res.render('meals/historique', {meals: rows, authUser: req.session.user});
    }
 
    static async deletehistorique(req, res) {
@@ -116,13 +129,51 @@ export default class MealController {
             [mealId]
          );
 
+         const success = req.query.success === 'true';
+
          res.render('meals/show', {
             user: req.session.user,
             meal: meal,
             recommendations: recommendations,
+            success: success,
+            authUser: req.session.user,
          });
       } catch (err) {
          console.error('Show meal error:', err);
+         res.status(500).send('Une erreur est survenue');
+      }
+   }
+
+   static async addToEaten(req, res) {
+      try {
+         const mealId = req.params.id;
+         const userId = req.session.user.id;
+
+         const meal = await Meal.find(mealId);
+
+         if (!meal) {
+            return res.status(404).send('Repas introuvable');
+         }
+
+         if (meal.user_id !== userId) {
+            return res.status(403).send('Accès refusé');
+         }
+
+         const todayDate = new Date();
+         const year = todayDate.getFullYear();
+         const month = todayDate.getMonth() + 1;
+         const day = todayDate.getDate();
+         const today = year + '-' + month + '-' + day;
+
+         const connection = database.getConnection();
+         await connection.query(
+            'INSERT INTO user_meals (user_id, meal_id, date) VALUES (?, ?, ?)',
+            [userId, mealId, today]
+         );
+
+         res.redirect('/meals/' + mealId + '?success=true');
+      } catch (err) {
+         console.error('Add to eaten error:', err);
          res.status(500).send('Une erreur est survenue');
       }
    }

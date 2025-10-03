@@ -1,8 +1,8 @@
-<div
-      class="bg-darker rounded-lg overflow-hidden border border-gray-800 hover:border-primary transition group">
+<a href="/meals/<%- meal.id %>"
+      class="bg-darker block w-full max-w-[350px] rounded-lg overflow-hidden border border-gray-800 hover:border-primary transition group">
       <div
-         class="h-40 bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-       <img src="<%- meal.image_path %>" alt="">
+         class="h-40 bg-gradient-to-br from-primary to-secondary flex items-center justify-center overflow-hidden" >
+       <img src="/images/uploads/<%- meal.image_path %>" class="object-cover w-full h-full" alt="">
       </div>
       <div class="p-4">
          <h4
@@ -29,4 +29,4 @@
             </div>
          </div>
       </div>
-   </div>
+   </a>

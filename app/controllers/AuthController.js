@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 export default class AuthController {
    static login(req, res) {
-      res.render('auth/login');
+      res.render('auth/login', {authUser: req.session.user});
    }
 
    static async loginPost(req, res) {
@@ -30,15 +30,10 @@ export default class AuthController {
    }
 
    static register(req, res) {
-      res.render('auth/register');
+      res.render('auth/register', {authUser: req.session.user});
    }
 
    static async registerPost(req, res) {
-      console.log('=== REQUÊTE REÇUE ===');
-      console.log('Content-Type:', req.headers['content-type']);
-      console.log('Body:', req.body);
-      console.log('Body keys:', Object.keys(req.body));
-
       try {
          const {
             fullname,
@@ -99,13 +94,11 @@ export default class AuthController {
          }
 
          if (errors.length > 0) {
-            console.log('Erreurs de validation:', errors);
             return res.status(400).json({success: false, errors});
          }
 
-         // Vérifier si l'email existe déjà (AVEC AWAIT!)
+         // Vérifier si l'email existe déjà
          const existingUser = await User.findByEmail(email);
-         console.log('Utilisateur existant?', existingUser ? 'Oui' : 'Non');
 
          if (existingUser) {
             return res.status(400).json({
@@ -116,7 +109,6 @@ export default class AuthController {
 
          // Hasher le mot de passe
          const hashedPassword = await bcrypt.hash(password, 12);
-         console.log('Mot de passe hashé');
 
          // Préparation des données pour la DB
          const finalUserData = {
@@ -132,10 +124,8 @@ export default class AuthController {
             condition_user,
          };
 
-         console.log("Création de l'utilisateur...");
-         // Créer l'utilisateur (AVEC AWAIT!)
+         // Créer l'utilisateur
          const newUser = await User.create(finalUserData);
-         console.log('Utilisateur créé avec ID:', newUser.id);
 
          // Créer la session
          req.session.user = {
@@ -144,14 +134,13 @@ export default class AuthController {
             email: finalUserData.email,
          };
 
-         console.log('✅ Inscription réussie!');
          return res.json({
             success: true,
             message: 'Compte créé avec succès !',
             redirect: '/dashboard',
          });
       } catch (error) {
-         console.error('❌ Erreur registerPost:', error);
+         console.error('Erreur registerPost:', error);
          return res
             .status(500)
             .json({success: false, message: 'Erreur interne du serveur'});

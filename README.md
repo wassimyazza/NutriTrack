@@ -106,24 +106,29 @@ mysql -u root -p nutritrack < tables.sql
 
 ### 4. Configuration des variables d'environnement
 
-Créer un fichier `.env` à la racine du projet :
+Créer un fichier `.env` à la racine du projet (copiez le contenu ci-dessous) :
 
 ```env
-# Base de données
+# Configuration de la base de données
 DB_HOST=localhost
 DB_USER=root
-DB_PASSWORD=votre_mot_de_passe
+DB_PASSWORD=votre_mot_de_passe_mysql
 DB_NAME=nutritrack
 
-# Session
-SESSION_SECRET=votre_clé_secrète_ici
+# Configuration de la session
+SESSION_SECRET=votre_clé_secrète_très_longue_et_sécurisée_ici
 
-# Google Gemini AI
-GEMINI_API_KEY=votre_clé_api_gemini
+# Configuration Google Gemini AI
+GEMINI_API_KEY=votre_clé_api_gemini_ici
 
-# Port du serveur
+# Configuration du serveur
 PORT=3000
+
+# Configuration de l'environnement
+NODE_ENV=development
 ```
+
+> ⚠️ **Important** : Remplacez les valeurs par vos propres configurations et ne commitez jamais le fichier `.env` !
 
 ## ⚙️ Configuration
 

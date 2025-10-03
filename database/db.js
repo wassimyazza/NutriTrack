@@ -36,16 +36,16 @@ class Database {
    async init() {
       try {
          const [result] = await this.getConnection().query(
-            'SHOW DATABASES LIKE "NutriTrack";'
+            'SHOW DATABASES LIKE "nutritrack";'
          );
 
          if (!result.length) {
             console.log('Creating database and tables...');
             await this.getConnection().query(`
-            CREATE DATABASE IF NOT EXISTS NutriTrack;
+            CREATE DATABASE IF NOT EXISTS nutritrack;
             `);
 
-            await this.getConnection().query('USE NutriTrack;');
+            await this.getConnection().query('USE nutritrack;');
 
             await this.getConnection().query(`
             CREATE TABLE users (
@@ -140,8 +140,8 @@ class Database {
 
             console.log('Database initialized successfully!');
          } else {
-            await this.getConnection().query('USE NutriTrack;');
-            console.log('Database already exists, using NutriTrack');
+            await this.getConnection().query('USE nutritrack;');
+            console.log('Database already exists, using nutritrack');
          }
       } catch (err) {
          console.error('Error initializing database:', err);

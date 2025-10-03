@@ -6,7 +6,11 @@ export default class ProfileController {
    static async show(req, res) {
       const user_id = req.session.user.id;
       const user = await User.find(user_id);
-      res.render('profile/index', {user, errors: {}});
+      res.render('profile/index', {
+         user,
+         errors: {},
+         authUser: req.session.user,
+      });
    }
 
    static async update(req, res) {
@@ -26,6 +30,10 @@ export default class ProfileController {
 
       const newUser = await User.find(user_id);
 
-      res.render('profile/index', {user: newUser, errors: mappedErrors});
+      res.render('profile/index', {
+         user: newUser,
+         errors: mappedErrors,
+         authUser: req.session.user,
+      });
    }
 }
