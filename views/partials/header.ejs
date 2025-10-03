@@ -1,57 +1,31 @@
-<header
-   id="header"
-   class="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
-   <nav
-      id="navbar"
+<header id="header" class="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
+   <nav id="navbar"
       class="max-w-7xl mx-auto flex justify-between items-center gap-4 sm:gap-8 md:gap-12 px-6 py-4 font-semibold">
       <a href="/" id="logo" class="flex items-center gap-2">
          <img src="/images/logo.png" alt="logo" class="h-10" />
       </a>
-
+      <% if(authUser){ %>
       <div class="hidden md:flex items-center gap-8">
-         <a
-            id="dashboardBtn"
-            href="/dashboard"
-            class="text-gray-300 hover:text-[#FF7040] transition-colors"
-            >Dashboard</a
-         >
-         <a
-            id="recommendationsBtn"
-            href="/recommendations"
-            class="text-gray-300 hover:text-[#30D5C8] transition-colors"
-            >Recommendations</a
-         >
-         <a
-            id="addMealBtn"
-            href="/add-meal"
-            class="text-gray-300 hover:text-[#FF7040] transition-colors"
-            >Ajout de repas</a
-         >
-           <a
-            id="historique"
-            href="/historique"
-            class="text-gray-300 hover:text-[#FF7040] transition-colors"
-            >Historique</a
-         >
+         <a id="dashboardBtn" href="/dashboard"
+            class="text-gray-300 hover:text-[#FF7040] transition-colors">Dashboard</a>
+         <a id="addMealBtn" href="/meals/upload" class="text-gray-300 hover:text-[#FF7040] transition-colors">AI
+            anlayse</a>
+         <a id="historique" href="/historique"
+            class="text-gray-300 hover:text-[#FF7040] transition-colors">Historique</a>
+         <a href="/profile" style="display: flex; justify-content: center; align-items: center; padding: 0;" id="profil"
+            class="w-12 h-12 flex justify-center items-center rounded-full bg-gradient-to-r from-[#FF7040] to-[#FF5820] font-bold text-white hover:shadow-lg hover:shadow-[#FF7040]/50 transition-all">
+            <i class="fa-solid fa-user text-2xl text-black"></i>
+         </a>
       </div>
+      <% } %>
 
-    <a
-  href="/profile"
-  id="profil"
-  class="w-12 h-12 flex justify-center items-center rounded-full bg-gradient-to-r from-[#FF7040] to-[#FF5820] font-bold text-white hover:shadow-lg hover:shadow-[#FF7040]/50 transition-all"
->
-  
-</a>
 
-      <a
-         href="/login"
-         class="text-gray-300 hover:text-[#FF7040] transition-colors"
-         id="connection"
-         >connection</a
-      >
+      <% if(!authUser){ %>
+      <a href="/login" class="text-gray-300 hover:text-[#FF7040] transition-colors" id="connection">connection</a>
+      <% } %>
    </nav>
 
-   <script>
+   <!-- <script>
       async function Permission() {
          const btn = document.getElementById('connection');
 
@@ -59,7 +33,7 @@
          const data = await response.json();
 
          // bouton principal
-         btn.style.display = data.auth ? 'none' : 'block';
+         btn.style.display = data.auth ? 'none' : 'flex';
 
          // boutons de navigation
          const btnNavIds = [
@@ -73,11 +47,11 @@
          btnNavIds.forEach(id => {
             const navBtn = document.getElementById(id);
             if (navBtn) {
-               navBtn.style.display = data.auth ? 'block' : 'none';
+               navBtn.style.display = data.auth ? 'flex' : 'none';
             }
          });
       }
 
       Permission();
-   </script>
+   </script> -->
 </header>

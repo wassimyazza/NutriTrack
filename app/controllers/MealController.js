@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 
 export default class MealController {
    static uploadPage(req, res) {
-      res.render('meals/upload', {user: req.session.user});
+      res.render('meals/upload', {user: req.session.user,authUser: req.session.user});
    }
 
    static async analyze(req, res) {
@@ -53,6 +53,7 @@ export default class MealController {
             notes: req.body.notes || 'Aucune note',
             filename: image_name,
             analysis: analysis,
+            authUser: req.session.user
          });
       } catch (err) {
          console.error('Analyse function errors: ', err);
@@ -73,7 +74,7 @@ export default class MealController {
          [user_id]
       );
 
-      res.render('meals/historique', {meals: rows});
+      res.render('meals/historique', {meals: rows,authUser: req.session.user});
    }
 
    static async deletehistorique(req, res) {
@@ -118,6 +119,7 @@ export default class MealController {
             user: req.session.user,
             meal: meal,
             recommendations: recommendations,
+            authUser: req.session.user
          });
       } catch (err) {
          console.error('Show meal error:', err);

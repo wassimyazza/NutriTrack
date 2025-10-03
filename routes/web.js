@@ -1,6 +1,5 @@
 import {profileUpdateSchema} from '../app/validators/profileValidator.js';
 import express from 'express';
-import BookController from '../app/controllers/BookController.js';
 import RecommendationController from '../app/controllers/RecommendationController.js';
 import AuthController from '../app/controllers/AuthController.js';
 import DashboardController from '../app/controllers/DashboardController.js';
@@ -39,12 +38,6 @@ router.patch(
    profileUpdateSchema,
    ProfileController.update
 );
-
-router.get('/books', BookController.index);
-router.get('/books/:id', BookController.show);
-router.post('/books', BookController.store);
-router.post('/books/:id/update', BookController.update);
-router.post('/books/:id/delete', BookController.destroy);
 
 router.get('/recommendations', RecommendationController.index);
 
