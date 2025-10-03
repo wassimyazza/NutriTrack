@@ -75,12 +75,16 @@ export default class MealController {
    }
 
    static async deletehistorique(req, res) {
-      const id_meal = req.params.id;
-      console.log(id_meal);
+      const user_meal_id = req.params.id;
+      console.log('Deleting user_meal_id:', user_meal_id);
       try {
-         Meal.delete(id_meal);
+         const connection = database.getConnection();
+         await connection.query('DELETE FROM user_meals WHERE id = ?', [
+            user_meal_id,
+         ]);
          return res.json('deleted');
       } catch (e) {
+         console.error('Error deleting meal:', e);
          return res.json('error');
       }
    }
