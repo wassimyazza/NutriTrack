@@ -4,6 +4,7 @@ import Meal from '../models/Meal.js';
 import geminiService from '../services/geminiService.js';
 import path from 'path';
 import {fileURLToPath} from 'url';
+import Meal_user from '../models/Meal_user.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -64,17 +65,14 @@ export default class MealController {
    }
 
    static async historiqueShow(req, res) {
-      const user_id = req.session.user.id;
-      console.log('hello ', user_id);
-      const connection = database.getConnection();
-      const [rows] = await connection.query(
-         `
-         Select * from meals where user_id = ? 
-         `,
-         [user_id]
-      );
-
-      res.render('meals/historique', {meals: rows});
+      try {
+         const user_id = req.session.user.id;
+         const meals = await Meal_user.findByUser(user_id);
+         res.render('meals/historique', {meals});
+      } catch (error) {
+         console.error(error);
+         res.status(500).send('Erreur serveur');
+      }
    }
 
    static async deletehistorique(req, res) {
