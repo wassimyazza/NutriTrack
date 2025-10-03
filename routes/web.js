@@ -24,6 +24,11 @@ router.post(
    MealController.analyze
 );
 router.get('/meals/:id', isAuthenticated, MealController.show);
+router.post(
+   '/meals/:id/add-to-eaten',
+   isAuthenticated,
+   MealController.addToEaten
+);
 
 // user routers
 
@@ -42,7 +47,7 @@ router.patch(
 router.get('/recommendations', RecommendationController.index);
 
 router.get('/', function (req, res) {
-   res.render('home',{authUser: req.session.user});
+   res.render('home', {authUser: req.session.user});
 });
 router.get('/historique', MealController.historiqueShow);
 router.delete('/historique/:id', MealController.deletehistorique);

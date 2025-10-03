@@ -41,6 +41,7 @@ export default class DashboardController {
          user,
          meals,
          recommendations,
+         authUser: req.session.user,
       });
    }
 }
