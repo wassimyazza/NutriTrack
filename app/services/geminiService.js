@@ -10,7 +10,7 @@ if (!API_KEY) {
 const genAI = new GoogleGenerativeAI(API_KEY);
 const model = genAI.getGenerativeModel({model: 'gemini-2.5-flash'});
 
-async function analyzeMealImage(imagePath) {
+async function analyzeMealImage(imagePath, userData) {
    try {
       const imageFile = fs.readFileSync(imagePath);
       const imageBase64 = imageFile.toString('base64');
@@ -24,25 +24,44 @@ async function analyzeMealImage(imagePath) {
          imageType = 'image/webp';
       }
 
-      const promptText = `Analyze this meal image and provide detailed nutritional information in French. 
-        
-        Please provide:
-        1. List of foods identified in the image
-        2. Estimated calories (kcal)
-        3. Estimated proteins (g)
-        4. Estimated carbohydrates (g)
-        5. Estimated fats (g)
-        6. Health recommendations based on the meal
-        
-        Format the response in JSON like this:
-        {
-            "foods": ["food1", "food2"],
-            "calories": 500,
-            "proteins": 25,
-            "carbs": 60,
-            "fats": 15,
-            "recommendations": ["recommendation1", "recommendation2"]
-        }`;
+      const userAge = userData.age || 'non spécifié';
+      const userGender = userData.gender === 'male' ? 'homme' : 'femme';
+      const userWeight = userData.weight || 'non spécifié';
+      const userHeight = userData.height || 'non spécifié';
+      const userActivity = userData.activity_level || 'non spécifié';
+      const userGoal = userData.goal || 'non spécifié';
+      const userCondition = userData.condition_user || 'non spécifié';
+
+      const promptText = `Analyze this meal image and provide detailed nutritional information in French.
+      
+      User Profile:
+      - Age: ${userAge} ans
+      - Gender: ${userGender}
+      - Weight: ${userWeight} kg
+      - Height: ${userHeight} cm
+      - Activity Level: ${userActivity}
+      - Goal: ${userGoal}
+      - Health Condition: ${userCondition}
+      
+      Please provide:
+      1. List of foods identified in the image
+      2. Estimated calories (kcal)
+      3. Estimated proteins (g)
+      4. Estimated carbohydrates (g)
+      5. Estimated fats (g)
+      6. Health recommendations based on the meal AND the user profile (age, gender, weight, height, activity level, goal, and health condition)
+      
+      IMPORTANT: The recommendations must be personalized for this specific user based on their profile information.
+      
+      Format the response in JSON like this:
+      {
+          "foods": ["food1", "food2"],
+          "calories": 500,
+          "proteins": 25,
+          "carbs": 60,
+          "fats": 15,
+          "recommendations": ["recommendation1", "recommendation2", "recommendation3"]
+      }`;
 
       const imageData = {
          inlineData: {
