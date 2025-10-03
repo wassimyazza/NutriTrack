@@ -30,10 +30,6 @@ export default class ProfileController {
 
       const newUser = await User.find(user_id);
 
-      res.render('profile/index', {
-         user: newUser,
-         errors: mappedErrors,
-         authUser: req.session.user,
-      });
+      res.render('profile/index', {user: newUser, errors: mappedErrors});
    }
 }
