@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 
 export default class MealController {
    static uploadPage(req, res) {
-      res.render('meals/upload', {user: req.session.user});
+      res.render('meals/upload', {user: req.session.user,authUser: req.session.user});
    }
 
    static async analyze(req, res) {
@@ -54,6 +54,7 @@ export default class MealController {
             notes: req.body.notes || 'Aucune note',
             filename: image_name,
             analysis: analysis,
+            authUser: req.session.user
          });
       } catch (err) {
          console.error('Analyse function errors: ', err);
@@ -64,14 +65,17 @@ export default class MealController {
    }
 
    static async historiqueShow(req, res) {
-      try {
-         const user_id = req.session.user.id;
-         const meals = await Meal_user.findByUser(user_id);
-         res.render('meals/historique', {meals});
-      } catch (error) {
-         console.error(error);
-         res.status(500).send('Erreur serveur');
-      }
+      const user_id = req.session.user.id;
+      console.log('hello ', user_id);
+      const connection = database.getConnection();
+      const [rows] = await connection.query(
+         `
+         Select * from meals where user_id = ? 
+         `,
+         [user_id]
+      );
+
+      res.render('meals/historique', {meals: rows,authUser: req.session.user});
    }
 
    static async deletehistorique(req, res) {
@@ -116,6 +120,7 @@ export default class MealController {
             user: req.session.user,
             meal: meal,
             recommendations: recommendations,
+            authUser: req.session.user
          });
       } catch (err) {
          console.error('Show meal error:', err);

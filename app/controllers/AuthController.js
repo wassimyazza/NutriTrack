@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 export default class AuthController {
    static login(req, res) {
-      res.render('auth/login');
+      res.render('auth/login',{authUser: req.session.user});
    }
 
    static async loginPost(req, res) {
@@ -30,7 +30,7 @@ export default class AuthController {
    }
 
    static register(req, res) {
-      res.render('auth/register');
+      res.render('auth/register', {authUser: req.session.user});
    }
 
    static async registerPost(req, res) {
