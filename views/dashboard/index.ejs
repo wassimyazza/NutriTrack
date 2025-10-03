@@ -51,31 +51,11 @@
             </div>
         </div>
 
-        <!-- Two Columns Layout -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Repas Récents -->
-            <div class="bg-dark rounded-xl p-6 border border-gray-800">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xl font-bold text-white">Repas Récents</h3>
-                    <button class="text-primary hover:text-secondary transition font-semibold">
-                        Voir tous mes repas →
-                    </button>
-                </div>
-                <div class="space-y-4">
-                    <% for (let i = 0; i < meals.length; i++) {
-                        const meal = meals[i]; %>
-                        <%- include('../partials/cardMeal.ejs', {meal: meal}) %>
-                    <% } %>
-                </div>
-            </div>
 
             <!-- Recommandations Récentes -->
-            <div class="bg-dark rounded-xl p-6 border border-gray-800">
+            <div class="bg-dark rounded-xl p-6 border border-gray-800  mb-6">
                 <div class="flex justify-between items-center mb-6">
                     <h3 class="text-xl font-bold text-white">Recommandations IA</h3>
-                    <button class="text-primary hover:text-secondary transition font-semibold">
-                        Voir toutes les recommandations →
-                    </button>
                 </div>
                 <div class="space-y-4">
                     <% for (let i = 0; i < recommendations.length; i++) { 
@@ -84,7 +64,20 @@
                     <% } %>
                 </div>
             </div>
-        </div>
+        
+            <!-- Repas Récents -->
+            <div class="bg-dark rounded-xl p-6 border border-gray-800">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-white">Repas Récents</h3>
+                    
+                </div>
+                <div class="flex justify-between flex-wrap gap-4 ">
+                    <% for (let i = 0; i < meals.length; i++) {
+                        const meal = meals[i]; %>
+                        <%- include('../partials/cardMeal.ejs', {meal: meal}) %>
+                    <% } %>
+                </div>
+            </div>
     </div>
 
     <!-- Quick Action Button -->
