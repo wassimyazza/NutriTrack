@@ -1,16 +1,16 @@
 <div class="bg-darker rounded-lg p-5 border border-gray-800 hover:border-primary transition cursor-pointer">
-   <div class="flex items-start">
+   <div class="flex items-center">
          <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mr-4">
             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
             </svg>
          </div>
-         <div class="flex-1">
-            <div class="flex items-center justify-between mb-2">
-               <h4 class="font-semibold text-white"><%- recommendation.name %></h4>
+         <div class="flex-1 max-w-full">
+            <div class="flex items-center justify-between mb-2 overflow-hidden">
+               <h4 class="font-semibold text-white"><%- recommendation.meal_name %></h4>
                <span class="text-xs text-gray-500"><%- recommendation.timePassed %></span>
             </div>
-            <p class="text-gray-300 text-sm leading-relaxed text-nowrap overflow-ellipsis">
+            <p class="text-gray-300 text-sm leading-relaxed ">
                <%- recommendation.recommendation_text %>
             </p>
          </div>
