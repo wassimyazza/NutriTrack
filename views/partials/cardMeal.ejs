@@ -1,0 +1,32 @@
+<div
+      class="bg-darker rounded-lg overflow-hidden border border-gray-800 hover:border-primary transition group">
+      <div
+         class="h-40 bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+       <img src="<%- meal.image_path %>" alt="">
+      </div>
+      <div class="p-4">
+         <h4
+            class="font-bold text-white mb-1 group-hover:text-primary transition">
+           <%- meal.name %>
+         </h4>
+         <p class="text-sm text-gray-400 mb-3"><%- meal.created_at %></p>
+         <div class="grid grid-cols-4 gap-2 text-center">
+            <div>
+               <p class="text-xs text-gray-500">Calories</p>
+               <p class="text-sm font-bold text-primary"><%- meal.calories %></p>
+            </div>
+            <div>
+               <p class="text-xs text-gray-500">Prot.</p>
+               <p class="text-sm font-bold text-white"><%- meal.proteins %>g</p>
+            </div>
+            <div>
+               <p class="text-xs text-gray-500">Gluc.</p>
+               <p class="text-sm font-bold text-white"><%- meal.carbs %>g</p>
+            </div>
+            <div>
+               <p class="text-xs text-gray-500">Lip.</p>
+               <p class="text-sm font-bold text-white"><%- meal.fats %></p>
+            </div>
+         </div>
+      </div>
+   </div>

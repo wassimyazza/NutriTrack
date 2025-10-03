@@ -24,10 +24,11 @@ router.post(
    upload.single('mealImage'),
    MealController.analyze
 );
+router.get('/meals/:id', isAuthenticated, MealController.show);
 
 // user routers
 
-router.get('/dashboard', isAuthenticated, DashboardController.dashboard);
+router.get('/dashboard', isAuthenticated, DashboardController.show);
 router.get('/register', AuthController.register);
 router.post('/register', AuthController.registerPost);
 // profile routes
