@@ -1,5 +1,4 @@
 import database from '../../database/db.js';
-import mysql from 'mysql2/promise';
 import Meal from '../models/Meal.js';
 import geminiService from '../services/geminiService.js';
 import path from 'path';
@@ -88,7 +87,41 @@ export default class MealController {
       }
    }
 
-   static show(req, res) {
-      res.render('meals/show', {user: req.session.user});
+   static async show(req, res) {
+      try {
+         const mealId = req.params.id;
+         const userId = req.session.user.id;
+
+         const connection = database.getConnection();
+
+         const [meals] = await connection.query(
+            'SELECT * FROM meals WHERE id = ?',
+            [mealId]
+         );
+
+         if (!meals || meals.length === 0) {
+            return res.status(404).send('Repas introuvable');
+         }
+
+         const meal = meals[0];
+
+         if (meal.user_id !== userId) {
+            return res.status(403).send('Accès refusé');
+         }
+
+         const [recommendations] = await connection.query(
+            'SELECT * FROM recommendations WHERE meal_id = ?',
+            [mealId]
+         );
+
+         res.render('meals/show', {
+            user: req.session.user,
+            meal: meal,
+            recommendations: recommendations,
+         });
+      } catch (err) {
+         console.error('Show meal error:', err);
+         res.status(500).send('Une erreur est survenue');
+      }
    }
 }

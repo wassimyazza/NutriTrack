@@ -11,14 +11,24 @@
 
         <div class="bg-white rounded-3xl shadow-lg overflow-hidden">
             <div class="relative h-96">
-                <img src="/images/uploads/meal-example.jpg" alt="Repas" class="w-full h-full object-cover">
+                <img src="<%= meal.image_path.startsWith('/') ? meal.image_path : '/images/uploads/' + meal.image_path %>"
+                    alt="Repas" class="w-full h-full object-cover">
                 <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
                     <div class="flex items-center justify-between text-white">
                         <div>
-                            <h1 class="text-3xl font-bold mb-2">Tiramisu</h1>
-                            <p class="text-lg">1 octobre 2025, 15:30</p>
+                            <h1 class="text-3xl font-bold mb-2">
+                                <%= meal.name %>
+                            </h1>
+                            <p class="text-lg">
+                                <%= new Date(meal.created_at).toLocaleDateString('fr-FR', { day: 'numeric' ,
+                                    month: 'long' , year: 'numeric' , hour: '2-digit' , minute: '2-digit' }) %>
+                            </p>
                         </div>
-                        <span class="bg-green-500 px-4 py-2 rounded-full font-semibold">Analysé</span>
+                        <% if (meal.analyzed) { %>
+                            <span class="bg-green-500 px-4 py-2 rounded-full font-semibold">Analysé</span>
+                            <% } else { %>
+                                <span class="bg-yellow-500 px-4 py-2 rounded-full font-semibold">En attente</span>
+                                <% } %>
                     </div>
                 </div>
             </div>
@@ -29,53 +39,60 @@
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                     <div class="bg-orange-50 rounded-xl p-6 text-center">
                         <p class="text-gray-600 text-sm mb-2">Calories</p>
-                        <p class="text-3xl font-bold text-orange-600">400</p>
+                        <p class="text-3xl font-bold text-orange-600">
+                            <%= meal.calories %>
+                        </p>
                         <p class="text-gray-500 text-xs">kcal</p>
                     </div>
                     <div class="bg-blue-50 rounded-xl p-6 text-center">
                         <p class="text-gray-600 text-sm mb-2">Protéines</p>
-                        <p class="text-3xl font-bold text-blue-600">6</p>
+                        <p class="text-3xl font-bold text-blue-600">
+                            <%= meal.proteins %>
+                        </p>
                         <p class="text-gray-500 text-xs">g</p>
                     </div>
                     <div class="bg-purple-50 rounded-xl p-6 text-center">
                         <p class="text-gray-600 text-sm mb-2">Glucides</p>
-                        <p class="text-3xl font-bold text-purple-600">45</p>
+                        <p class="text-3xl font-bold text-purple-600">
+                            <%= meal.carbs %>
+                        </p>
                         <p class="text-gray-500 text-xs">g</p>
                     </div>
                     <div class="bg-yellow-50 rounded-xl p-6 text-center">
                         <p class="text-gray-600 text-sm mb-2">Lipides</p>
-                        <p class="text-3xl font-bold text-yellow-600">28</p>
+                        <p class="text-3xl font-bold text-yellow-600">
+                            <%= meal.fats %>
+                        </p>
                         <p class="text-gray-500 text-xs">g</p>
                     </div>
                 </div>
 
-                <div class="bg-teal-50 rounded-2xl p-6">
-                    <h3 class="text-xl font-bold text-teal-800 mb-4 flex items-center">
-                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
-                            </path>
-                        </svg>
-                        Recommandations
-                    </h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <span class="bg-teal-200 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></span>
-                            <p class="text-gray-700">Le tiramisu est un dessert riche en calories, en sucres et en
-                                matières grasses. Il est conseillé de le consommer avec modération.</p>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="bg-teal-200 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></span>
-                            <p class="text-gray-700">Pour équilibrer votre apport nutritionnel, assurez-vous que les
-                                autres repas de la journée soient riches en légumes et protéines maigres.</p>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="bg-teal-200 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></span>
-                            <p class="text-gray-700">Si vous surveillez votre poids, envisagez de partager cette portion
-                                ou de choisir un dessert plus léger.</p>
-                        </li>
-                    </ul>
-                </div>
+                <% if (recommendations && recommendations.length> 0) { %>
+                    <div class="bg-teal-50 rounded-2xl p-6">
+                        <h3 class="text-xl font-bold text-teal-800 mb-4 flex items-center">
+                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                                </path>
+                            </svg>
+                            Recommandations
+                        </h3>
+                        <ul class="space-y-3">
+                            <% recommendations.forEach(function(rec) { %>
+                                <li class="flex items-start">
+                                    <span class="bg-teal-200 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></span>
+                                    <p class="text-gray-700">
+                                        <%= rec.recommendation_text %>
+                                    </p>
+                                </li>
+                                <% }); %>
+                        </ul>
+                    </div>
+                    <% } else { %>
+                        <div class="bg-gray-100 rounded-2xl p-6 text-center">
+                            <p class="text-gray-600">Aucune recommandation disponible pour ce repas</p>
+                        </div>
+                        <% } %>
             </div>
         </div>
     </div>
